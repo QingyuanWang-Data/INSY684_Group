@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Raw / large data
+data/raw/
+data/processed/
+homecreditdefaultriskdata/
+*.zip
+
+# Large model artifacts
+artifacts/*.joblib
+artifacts/*.pkl
