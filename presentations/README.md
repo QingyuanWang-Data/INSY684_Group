@@ -5,10 +5,11 @@ into the group's final slide deck.
 
 ## Files
 
-- `insy684-mlops-technical-section.pptx`: 8-slide technical section covering
-  the Home Credit use case, production architecture, fresh MLflow training
-  evidence, Optuna tuning results, validation artifacts, fairness, monitoring,
-  and final submission talking points.
+- `insy684-mlops-technical-section.pptx`: 10-slide polished technical section
+  covering the submission checklist, Home Credit use case, production
+  architecture, fresh MLflow training evidence, Optuna tuning results,
+  validation artifacts, fairness, monitoring, deployment readiness, and final
+  presentation talking points.
 
 ## Latest Evidence Included
 
