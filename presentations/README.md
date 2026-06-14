@@ -5,9 +5,18 @@ into the group's final slide deck.
 
 ## Files
 
-- `insy684-mlops-technical-section.pptx`: technical section covering the Home
-  Credit use case, production architecture, validation, MLflow/Optuna extensions,
-  fairness, monitoring, and remaining deployment steps.
+- `insy684-mlops-technical-section.pptx`: 8-slide technical section covering
+  the Home Credit use case, production architecture, fresh MLflow training
+  evidence, Optuna tuning results, validation artifacts, fairness, monitoring,
+  and final submission talking points.
+
+## Latest Evidence Included
+
+- Sampled MLflow run: `sampled-50000-final`
+- Validation ROC-AUC: `0.7619`
+- Optuna best validation ROC-AUC: `0.7679`
+- Feature count: `450`
+- Evidence date: `2026-06-14`
 
 ## Final Deck Reminder
 
