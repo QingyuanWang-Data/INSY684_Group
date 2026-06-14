@@ -17,6 +17,8 @@ __pycache__/
 
 # Large raw datasets (do not commit)
 homecreditdefaultriskdata/
+home-credit-default-risk.zip
+*.zip
 
 # Large trained artifacts (keep reports, skip model binaries)
 artifacts/*.joblib
