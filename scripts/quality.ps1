@@ -18,9 +18,9 @@ else {
 }
 
 $env:UV_CACHE_DIR = Join-Path $repoRoot ".uv-cache"
-$pytestTempRoot = Join-Path $repoRoot ".pytest_tmp"
+$pytestTempRoot = Join-Path $repoRoot ".quality_tmp\pytest"
 $pytestBaseTemp = Join-Path $pytestTempRoot "run-$PID"
-New-Item -ItemType Directory -Force -Path $pytestTempRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $pytestBaseTemp | Out-Null
 
 function Invoke-QualityStep {
     param(
