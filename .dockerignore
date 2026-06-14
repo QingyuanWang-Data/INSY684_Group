@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.uv-cache
+.pytest_cache
+.pytest_tmp
+.ruff_cache
+__pycache__
+*.pyc
+homecreditdefaultriskdata
+artifacts/*.joblib
+outputs

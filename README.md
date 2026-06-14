@@ -1,11 +1,12 @@
 # INSY684 Group Project
 
-Production-oriented machine learning project for Home Credit default risk scoring.
+Production-oriented machine learning project for Home Credit default risk
+scoring.
 
 This repository continues the team's course 1 project and reorganizes it for the
 INSY684 group assignment. The current baseline is a FastAPI + LightGBM service
 with training, validation, explainability, drift diagnostics, Docker packaging,
-and automated tests.
+MLflow hooks, Optuna tuning, governance documentation, CI, and automated tests.
 
 ## Project Scope
 
@@ -15,25 +16,37 @@ difficulty using the Kaggle Home Credit Default Risk dataset.
 Main goals:
 
 - Build a reproducible credit-risk ML pipeline.
-- Serve predictions through an API and local desktop app.
+- Serve predictions through a tested API and local desktop app.
 - Track validation, calibration, threshold, subgroup, and drift diagnostics.
-- Extend the project with INSY684 topics such as MLflow tracking, hyperparameter
-  optimization, CI/CD, fairness review, and deployment documentation.
+- Extend the course 1 project with INSY684 topics such as MLflow tracking,
+  hyperparameter optimization, CI/CD, fairness review, model monitoring, and
+  deployment documentation.
 
 ## Repository Structure
 
 ```text
 .
-├── src/homecredit_service/      # Training, feature engineering, API, inference service
-├── tests/                       # Unit and API tests
-├── docs/                        # Business, data, validation, explainability, and planning docs
-├── presentations/               # Future weekly/final presentation materials
-├── Dockerfile                   # Containerized API runtime
-├── Makefile                     # Common project commands
-├── pyproject.toml               # Python package and tool configuration
-├── requirements.txt             # pip-compatible dependency list
-└── .github/workflows/ci.yml     # GitHub Actions quality gate
+|-- src/homecredit_service/      # Training, feature engineering, API, inference
+|-- tests/                       # Unit and API tests
+|-- docs/                        # Business, data, validation, governance docs
+|-- presentations/               # Final-deck technical section
+|-- artifacts/                   # Baseline reports and plots
+|-- Dockerfile                   # Containerized API runtime
+|-- Makefile                     # Common project commands
+|-- pyproject.toml               # Python package and tool configuration
+|-- uv.lock                      # Locked dependency resolution
+|-- requirements.txt             # pip-compatible dependency list
+`-- .github/workflows/           # Quality and Docker build gates
 ```
+
+## Submission Pointers
+
+- Repository: `https://github.com/QingyuanWang-Data/INSY684_Group`
+- Working branch: `code`
+- Submission checklist: `docs/SUBMISSION_INFO.md`
+- Project plan and requirement mapping: `docs/PROJECT_PLAN.md`
+- Final technical deck section:
+  `presentations/insy684-mlops-technical-section.pptx`
 
 ## Data
 
@@ -134,6 +147,8 @@ The tuning command writes:
 - `artifacts/tuning_report.json`
 - `artifacts/tuning_trials.csv`
 
+See `docs/EXPERIMENT_TRACKING.md` for the run protocol and evidence checklist.
+
 ## Governance Reports
 
 Generate fairness and monitoring reports from saved artifacts:
@@ -154,12 +169,6 @@ The command writes:
 - `docs/MONITORING.md`
 - `docs/MODEL_CARD.md`
 
-## Code Quality
-
-See `docs/CODE_QUALITY.md` for the engineering practices used in this repository,
-including typed APIs, readiness checks, CI matrix testing, bounded batch inference,
-MLflow tracking, Optuna tuning, and generated governance reports.
-
 ## Serving
 
 Start the FastAPI service:
@@ -171,10 +180,15 @@ make run
 Useful endpoints:
 
 - `GET /health`
+- `GET /ready`
 - `GET /metadata`
 - `GET /feature-importance?limit=20`
 - `POST /predict`
 - `POST /predict/batch`
+
+`/health` verifies that the API process is alive. `/ready` verifies that the
+model bundle has been loaded; it will return unavailable until
+`artifacts/model_bundle.joblib` exists locally or is mounted into the container.
 
 ## Docker
 
@@ -182,6 +196,10 @@ Useful endpoints:
 docker build -t insy684-homecredit-service .
 docker run --rm -p 8000:8000 -v $(pwd)/artifacts:/app/artifacts insy684-homecredit-service
 ```
+
+The Docker image installs dependencies from `uv.lock` and expects the model
+bundle to be provided through the mounted `artifacts` directory. See
+`docs/DEPLOYMENT.md` for local, container, and cloud-native deployment notes.
 
 ## Current Baseline Coverage
 
@@ -197,17 +215,15 @@ Already migrated from the course 1 project:
 - FastAPI prediction service
 - Local desktop inference app
 - Dockerfile, Makefile, pytest tests, and GitHub Actions CI
+- Docker image build gate in GitHub Actions
 - MLflow logging hooks for training runs
 - Optuna tuning command for LightGBM hyperparameters
+- Generated fairness, monitoring, model-card, and code-quality reports
 
-## Next INSY684 Additions
+## Remaining Before Final Submission
 
-Planned next implementation work:
-
-- Run and document MLflow experiment results
-- Run and document Optuna tuning results
-- Review generated fairness and monitoring reports
-- Cloud deployment notes or deployment workflow
-- Final presentation deck
-
-See `docs/PROJECT_PLAN.md` for the working checklist.
+- Fill in the final team name, member names, and GitHub IDs in
+  `docs/SUBMISSION_INFO.md`.
+- If the raw Kaggle data is available, rerun `make train-mlflow` and `make tune`
+  so the latest experiment outputs can be shown in the final slides.
+- Merge the technical section PPT into the group presentation deck.

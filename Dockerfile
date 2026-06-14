@@ -6,9 +6,9 @@ ENV PYTHONUNBUFFERED=1 \
     UV_LINK_MODE=copy \
     HC_ARTIFACT_PATH=/app/artifacts/model_bundle.joblib
 
-COPY pyproject.toml README.md ./
+COPY pyproject.toml uv.lock README.md ./
 COPY src ./src
-RUN uv sync --no-dev
+RUN uv sync --locked --no-dev
 RUN mkdir -p /app/artifacts
 
 EXPOSE 8000
