@@ -47,7 +47,7 @@ select = ["E", "F", "I", "UP", "B", "RUF"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-addopts = "-q -p no:cacheprovider --basetemp=.pytest_tmp"
+addopts = "-q -p no:cacheprovider"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/homecredit_service"]

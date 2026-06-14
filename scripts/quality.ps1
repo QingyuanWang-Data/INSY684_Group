@@ -18,7 +18,22 @@ else {
 }
 
 $env:UV_CACHE_DIR = Join-Path $repoRoot ".uv-cache"
+$pytestTempRoot = Join-Path $repoRoot ".pytest_tmp"
+$pytestBaseTemp = Join-Path $pytestTempRoot "run-$PID"
+New-Item -ItemType Directory -Force -Path $pytestTempRoot | Out-Null
 
-& $uv run ruff check .
-& $uv run ty check src tests
-& $uv run pytest
+function Invoke-QualityStep {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string[]]$Arguments
+    )
+
+    & $uv @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        throw "Command failed: uv $($Arguments -join ' ')"
+    }
+}
+
+Invoke-QualityStep @("run", "--no-sync", "ruff", "check", ".")
+Invoke-QualityStep @("run", "--no-sync", "ty", "check", "src", "tests")
+Invoke-QualityStep @("run", "--no-sync", "pytest", "--basetemp", $pytestBaseTemp)
