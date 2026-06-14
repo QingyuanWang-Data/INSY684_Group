@@ -24,9 +24,9 @@ Fill in this section before the final LMS submission.
 | Name | Email | GitHub ID | Role / contribution |
 | --- | --- | --- | --- |
 | Qingyuan Wang | `qingyuan.wang@mail.mcgill.ca` | `QingyuanWang-Data` | Repository owner; integration and project coordination |
-| Yihang Shao | `yihang.shao@mail.mcgill.com` | To be filled | To be filled |
-| Xuechen Hong | `xuechen.hong@mail.mcgill.ca` | To be filled | To be filled |
-| Yumeng Zhao | `yumeng.zhao@mail.mcgill.ca` | To be filled | To be filled |
+| Yihang Shao | `yihang.shao@mail.mcgill.com` | `Hankpapa` | To be filled |
+| Xuechen Hong | `xuechen.hong@mail.mcgill.ca` | `xuechen-17` | To be filled |
+| Yumeng Zhao | `yumeng.zhao@mail.mcgill.ca` | `yasmminee` | To be filled |
 
 ## Final Submission Checklist
 
