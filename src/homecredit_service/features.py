@@ -27,6 +27,7 @@ TABLE_TEMPORAL_CUTOFFS: dict[str, tuple[str, ...]] = {
     "installments_payments": ("DAYS_ENTRY_PAYMENT", "DAYS_INSTALMENT"),
     "credit_card_balance": ("MONTHS_BALANCE",),
 }
+ID_COLUMNS = (ID_COLUMN, "SK_ID_BUREAU", "SK_ID_PREV")
 
 
 def safe_divide(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
@@ -49,8 +50,18 @@ def downcast_numeric(df: pd.DataFrame) -> pd.DataFrame:
     for column in optimized.select_dtypes(include=["float64"]).columns:
         optimized[column] = optimized[column].astype("float32")
     for column in optimized.select_dtypes(include=["int64"]).columns:
+        if column in ID_COLUMNS:
+            continue
         optimized[column] = pd.to_numeric(optimized[column], downcast="integer")
     return optimized
+
+
+def normalize_id_columns(df: pd.DataFrame) -> pd.DataFrame:
+    normalized = df.copy()
+    for column in ID_COLUMNS:
+        if column in normalized.columns:
+            normalized[column] = pd.to_numeric(normalized[column], errors="raise").astype("int64")
+    return normalized
 
 
 def read_csv(path: Path, usecols: list[str] | None = None) -> pd.DataFrame:
@@ -58,7 +69,7 @@ def read_csv(path: Path, usecols: list[str] | None = None) -> pd.DataFrame:
         df = pd.read_csv(str(path), low_memory=False)
     else:
         df = pd.read_csv(str(path), usecols=cast(Any, usecols), low_memory=False)
-    return downcast_numeric(df)
+    return normalize_id_columns(downcast_numeric(df))
 
 
 def filter_by_temporal_cutoff(df: pd.DataFrame, cutoff_columns: tuple[str, ...]) -> pd.DataFrame:
@@ -100,11 +111,11 @@ def aggregate_numeric(
 
     grouped_size = df.groupby(group_key).size().to_frame(name=f"{prefix}_COUNT")
     if not numeric_cols:
-        return grouped_size
+        return grouped_size.rename_axis(group_key)
 
     grouped = df.groupby(group_key)[numeric_cols].agg(stats)
     grouped.columns = [f"{prefix}_{name}_{agg}" for name, agg in grouped.columns]
-    return grouped.join(grouped_size, how="left")
+    return grouped.join(grouped_size, how="left").rename_axis(group_key)
 
 
 def build_auxiliary_aggregates(
