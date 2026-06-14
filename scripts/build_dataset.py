@@ -3,6 +3,7 @@ from pathlib import Path
 
 from src.data_processing import (
     build_data_profile,
+    build_drift_baseline,
     build_training_frame,
     run_data_quality_checks,
 )
@@ -33,6 +34,9 @@ def main() -> None:
     )
     class_balance["rate"] = class_balance["count"] / class_balance["count"].sum()
     class_balance.to_csv(OUTPUT_DIR / "class_balance.csv", index=False)
+
+    drift_baseline = build_drift_baseline(training_frame)
+    drift_baseline.to_csv(OUTPUT_DIR / "drift_baseline.csv", index=False)
 
     print("Saved outputs to artifacts/data_profile/")
 

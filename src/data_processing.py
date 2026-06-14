@@ -226,3 +226,21 @@ def run_data_quality_checks(df: pd.DataFrame) -> dict:
         checks["positive_rate"] = float(df[TARGET_COLUMN].mean())
 
     return checks
+
+
+def build_drift_baseline(df: pd.DataFrame) -> pd.DataFrame:
+    """Create a simple training-data baseline for future drift monitoring."""
+    numeric_df = df.select_dtypes(include=[np.number])
+
+    baseline = pd.DataFrame(
+        {
+            "column": numeric_df.columns,
+            "mean": [float(numeric_df[col].mean()) for col in numeric_df.columns],
+            "std": [float(numeric_df[col].std()) for col in numeric_df.columns],
+            "missing_rate": [float(numeric_df[col].isna().mean()) for col in numeric_df.columns],
+            "min": [float(numeric_df[col].min()) for col in numeric_df.columns],
+            "max": [float(numeric_df[col].max()) for col in numeric_df.columns],
+        }
+    )
+
+    return baseline
