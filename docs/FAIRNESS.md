@@ -6,29 +6,29 @@ This report reviews subgroup behavior for the Home Credit default-risk model. Th
 
 ## Model Context
 
-- Validation ROC-AUC: `0.7844`
-- Test ROC-AUC: `0.7858`
+- Validation ROC-AUC: `0.7619`
+- Test ROC-AUC: `n/a`
 - Decision threshold used: `0.549`
 
 ## Gender Subgroup Snapshot
 
 | Group | Count | Positive rate | AUC | Recall | Approval rate | Approved default rate |
 | --- | --- | --- | --- | --- | --- | --- |
-| F | 40357 | 0.0699 | 0.7859 | 0.4114 | 0.8892 | 0.0463 |
-| M | 21145 | 0.1013 | 0.7717 | 0.5250 | 0.8014 | 0.0601 |
+| F | 6618 | 0.0706 | 0.7636 | 0.3126 | 0.9184 | 0.0528 |
+| M | 3382 | 0.0999 | 0.7489 | 0.4290 | 0.8489 | 0.0672 |
 
 ## Largest Validation Gaps
 
 | Column | Metric | Lowest group | Highest group | Gap |
 | --- | --- | --- | --- | --- |
-| NAME_INCOME_TYPE | recall | Pensioner (0.2457) | Working (0.5197) | 0.2740 |
-| NAME_FAMILY_STATUS | recall | Widow (0.2961) | Single / not married (0.5333) | 0.2372 |
-| NAME_EDUCATION_TYPE | recall | Higher education (0.3121) | Secondary / secondary special (0.4961) | 0.1840 |
-| NAME_EDUCATION_TYPE | approval_rate | Lower secondary (0.7971) | Higher education (0.9349) | 0.1378 |
-| NAME_INCOME_TYPE | pr_auc | Pensioner (0.1709) | Working (0.3047) | 0.1338 |
-| NAME_EDUCATION_TYPE | specificity | Lower secondary (0.8173) | Higher education (0.9494) | 0.1321 |
-| NAME_CONTRACT_TYPE | recall | Revolving loans (0.3366) | Cash loans (0.4685) | 0.1318 |
-| NAME_FAMILY_STATUS | pr_auc | Widow (0.1901) | Single / not married (0.3149) | 0.1249 |
+| NAME_FAMILY_STATUS | recall | Widow (0.1395) | Single / not married (0.4266) | 0.2870 |
+| NAME_INCOME_TYPE | recall | Pensioner (0.1800) | Working (0.4188) | 0.2388 |
+| NAME_EDUCATION_TYPE | recall | Higher education (0.2256) | Secondary / secondary special (0.3876) | 0.1620 |
+| NAME_INCOME_TYPE | pr_auc | Pensioner (0.1467) | Working (0.2925) | 0.1458 |
+| CODE_GENDER | recall | F (0.3126) | M (0.4290) | 0.1164 |
+| NAME_FAMILY_STATUS | approval_rate | Single / not married (0.8562) | Widow (0.9472) | 0.0910 |
+| NAME_INCOME_TYPE | approval_rate | Working (0.8641) | Pensioner (0.9482) | 0.0841 |
+| NAME_EDUCATION_TYPE | approval_rate | Secondary / secondary special (0.8757) | Higher education (0.9548) | 0.0791 |
 
 ## Largest Test Gaps
 

@@ -43,11 +43,41 @@ guardrails before release.
 
 ## Current Evidence Status
 
-The repository includes the implementation, tests, and baseline artifact reports.
-Raw Kaggle files are intentionally not committed, so a fresh MLflow or Optuna run
-requires adding the dataset locally under `homecreditdefaultriskdata/`.
+The repository includes the implementation, tests, baseline artifact reports,
+and a fresh sampled experiment run completed on June 14, 2026.
 
-If the team has the raw data available before submission, rerun:
+Sampled MLflow training run:
+
+- Run name: `sampled-50000-final`
+- Local MLflow run ID: `e39bb77d177f41298e7cc44275e5db30`
+- Sample size: `50,000` application rows
+- Feature count: `450`
+- Train / validation / test split rows: `35,000 / 10,000 / 5,000`
+- Validation ROC-AUC: `0.7619`
+- Train ROC-AUC: `0.9679`
+- Selected decision threshold: `0.549`
+- Output evidence: `artifacts/training_report.json` and `artifacts/plots/`
+
+Optuna tuning run:
+
+- Sample size: `20,000`
+- Trials: `10`
+- Timeout: `1,800` seconds
+- Best validation ROC-AUC: `0.7679`
+- Best trial: `9`
+- Best parameters:
+  `n_estimators=387`, `learning_rate=0.0199`, `num_leaves=28`,
+  `min_child_samples=64`, `subsample=0.7638`,
+  `colsample_bytree=0.8918`, `reg_alpha=0.3825`,
+  `reg_lambda=1.7857`, `max_depth=9`
+- Output evidence: `artifacts/tuning_report.json` and
+  `artifacts/tuning_trials.csv`
+
+The local `mlruns/` directory and `mlflow.db` are intentionally ignored because
+they are machine-specific runtime tracking stores. The committed JSON, CSV,
+plots, and governance reports provide the portable evidence for review.
+
+To refresh the evidence before submission, rerun:
 
 ```bash
 make train-mlflow
@@ -55,6 +85,6 @@ make tune
 make reports
 ```
 
-Then include the new MLflow run summary and tuning comparison in the final deck.
-This gives the presentation stronger evidence for the MLflow, model tracking,
-and hyperparameter optimization parts of the assignment.
+Then include the MLflow run summary and tuning comparison in the final deck. This
+gives the presentation stronger evidence for the MLflow, model tracking, and
+hyperparameter optimization parts of the assignment.

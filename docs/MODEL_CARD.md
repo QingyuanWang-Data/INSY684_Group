@@ -6,16 +6,16 @@ This model estimates payment-difficulty risk for Home Credit loan applicants. It
 
 ## Data
 
-- Rows: `307511`
+- Rows: `50000`
 - Columns: `452`
-- Positive class rate: `0.0807`
-- Negative class rate: `0.9193`
+- Positive class rate: `0.0805`
+- Negative class rate: `0.9195`
 
 ## Performance
 
-- Train ROC-AUC: `0.9095`
-- Validation ROC-AUC: `0.7844`
-- Test ROC-AUC: `0.7858`
+- Train ROC-AUC: `0.9679`
+- Validation ROC-AUC: `0.7619`
+- Test ROC-AUC: `n/a`
 - Threshold used: `0.549`
 
 ## Key Parameters

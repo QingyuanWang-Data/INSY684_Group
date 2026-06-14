@@ -1,63 +1,63 @@
 {
   "score_distribution": {
-    "train_vs_validation_psi": 0.0013040290734103901,
+    "train_vs_validation_psi": 0.0139163408055446,
     "train_vs_validation_severity": "stable",
-    "train_vs_test_psi": 0.0006846353106525359,
-    "train_vs_test_severity": "stable"
+    "train_vs_test_psi": null,
+    "train_vs_test_severity": "not_available"
   },
   "feature_distribution": {
     "rows": [
       {
         "feature": "AMT_INCOME_TOTAL",
-        "train_vs_validation_psi": 0.0002746536246213813,
-        "train_vs_test_psi": 0.00024956366994261143,
+        "train_vs_validation_psi": 0.000844376125637813,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "AMT_CREDIT",
-        "train_vs_validation_psi": 0.0002077799643194495,
-        "train_vs_test_psi": 0.000251275436367587,
+        "train_vs_validation_psi": 0.0018279903010161192,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "AMT_ANNUITY",
-        "train_vs_validation_psi": 0.0002079861408125955,
-        "train_vs_test_psi": 0.00043801691956442363,
+        "train_vs_validation_psi": 0.0012575503035257537,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "DAYS_BIRTH",
-        "train_vs_validation_psi": 0.00022268964274819883,
-        "train_vs_test_psi": 0.0006818732811551153,
+        "train_vs_validation_psi": 0.0010663031953969105,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "DAYS_EMPLOYED",
-        "train_vs_validation_psi": 0.00013132310016809257,
-        "train_vs_test_psi": 0.0004744272243931702,
+        "train_vs_validation_psi": 0.0013223097859471904,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "CREDIT_INCOME_RATIO",
-        "train_vs_validation_psi": 5.083702706082265e-05,
-        "train_vs_test_psi": 0.0003238013214490099,
+        "train_vs_validation_psi": 0.0014719840671474464,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       },
       {
         "feature": "ANNUITY_INCOME_RATIO",
-        "train_vs_validation_psi": 0.0002618251994630001,
-        "train_vs_test_psi": 0.00020489949802993552,
+        "train_vs_validation_psi": 0.001390832058287379,
+        "train_vs_test_psi": null,
         "train_vs_validation_severity": "stable",
-        "train_vs_test_severity": "stable"
+        "train_vs_test_severity": "not_available"
       }
     ],
-    "max_train_vs_validation_psi": 0.0002746536246213813,
-    "max_train_vs_test_psi": 0.0006818732811551153
+    "max_train_vs_validation_psi": 0.0018279903010161192,
+    "max_train_vs_test_psi": null
   }
 }
