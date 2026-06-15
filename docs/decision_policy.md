@@ -67,6 +67,8 @@ This tradeoff should be evaluated using both machine learning metrics and busine
 The current technical branch uses threshold `0.549` for validation policy evidence. At this
 threshold:
 
+- Final test ROC-AUC: `0.7644`.
+- Test PR-AUC: `0.2309`.
 - Approval rate: `89.49%`.
 - Approved default rate: `5.74%`.
 - Recall for payment-difficulty applicants: `36.15%`.
@@ -123,8 +125,9 @@ governance. Before real business use, the team would need:
 
 ## Current Project Position
 
-At the current stage, the decision policy is partly supported by validation evidence from the
-technical branch. Before final submission, this document should be revised with:
+At the current stage, the decision policy is supported by validation evidence and final held-out
+test evidence from the technical branch. Before final submission, this document should be
+checked against the final `main` branch version with:
 
 - The selected model version.
 - The selected threshold or risk band cutoffs.

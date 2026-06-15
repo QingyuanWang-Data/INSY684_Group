@@ -10,7 +10,9 @@ This report translates the current model evidence from the technical branch into
 | --- | ---: |
 | Course 1 reference test ROC-AUC | `0.7858` |
 | Course 2 sampled MLflow validation ROC-AUC | `0.7619` |
+| Course 2 final test ROC-AUC | `0.7644` |
 | Course 2 Optuna best validation ROC-AUC | `0.7679` |
+| Course 2 test PR-AUC | `0.2309` |
 | Selected threshold | `0.549` |
 | Approval rate at selected threshold | `89.49%` |
 | Approved default rate | `5.74%` |
@@ -18,7 +20,7 @@ This report translates the current model evidence from the technical branch into
 | Recall for payment-difficulty applicants | `36.15%` |
 | Specificity for normal-repayment applicants | `91.73%` |
 
-The Course 2 sampled run should not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.
+The final test ROC-AUC of `0.7644` confirms that the current Course 2 model ranks applicants meaningfully better than random on the held-out test split. The Course 2 result should still not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.
 
 ## Threshold and Business Policy Interpretation
 
@@ -68,4 +70,3 @@ Use the model as a credit-risk decision-support system rather than a fully autom
 3. High-risk band: consider decline, lower credit limit, stricter pricing, or additional documentation.
 
 Before final submission, this report should be updated with the final `main` branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.
-

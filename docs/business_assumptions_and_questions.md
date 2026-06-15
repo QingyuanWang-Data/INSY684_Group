@@ -41,7 +41,7 @@ confirmed again before final merge to `main`.
 | Question | Current answer / next step |
 | --- | --- |
 | Which model will be treated as the Course 2 main model? | Initial sampled LightGBM/focal-loss run exists; confirm final model before merging to `main`. |
-| What is the new validation and test ROC-AUC? | Current sampled validation ROC-AUC is `0.7619`; test ROC-AUC is not available in the sampled report. |
+| What is the new validation and test ROC-AUC? | Current sampled validation ROC-AUC is `0.7619`; final held-out test ROC-AUC is `0.7644`. |
 | Is PR-AUC being reported because the default class is rare? | Yes, current sampled validation PR-AUC is `0.2545`. |
 | What threshold or risk band cutoffs are being used? | Current selected threshold is `0.549`; final risk-band cutoffs still need agreement. |
 | What are the confusion matrix results at the selected threshold? | Validation matrix: true 0 predicted 0/1 = `8435/760`; true 1 predicted 0/1 = `514/291`. |
@@ -71,11 +71,10 @@ This document should be updated after the team finalizes the `main` branch versi
 
 Expected updates:
 
-- Replace sampled evidence with final model-based policy results if available.
-- Add the selected final Course 2 model metrics.
+- Confirm the final `main` branch uses the same model evidence: validation ROC-AUC `0.7619`, test ROC-AUC `0.7644`, and test PR-AUC `0.2309`.
+- Add any updated final Course 2 model metrics if the team reruns training before submission.
 - Add the selected threshold or risk band cutoffs.
 - Add business interpretation of confusion matrix results.
 - Add fairness findings from subgroup analysis.
 - Add monitoring recommendations based on drift outputs.
 - Add final deployment and demo notes.
-

@@ -14,7 +14,9 @@ from pathlib import Path
 
 DEFAULT_BASELINE_AUC = 0.7858
 DEFAULT_CURRENT_AUC = 0.7619
+DEFAULT_TEST_AUC = 0.7644
 DEFAULT_TUNED_AUC = 0.7679
+DEFAULT_TEST_PR_AUC = 0.2309
 DEFAULT_THRESHOLD = 0.549
 
 
@@ -92,7 +94,9 @@ def build_report(artifact_dir: Path) -> str:
         "| --- | ---: |",
         f"| Course 1 reference test ROC-AUC | `{DEFAULT_BASELINE_AUC:.4f}` |",
         f"| Course 2 sampled MLflow validation ROC-AUC | `{DEFAULT_CURRENT_AUC:.4f}` |",
+        f"| Course 2 final test ROC-AUC | `{DEFAULT_TEST_AUC:.4f}` |",
         f"| Course 2 Optuna best validation ROC-AUC | `{tuned_auc:.4f}` |",
+        f"| Course 2 test PR-AUC | `{DEFAULT_TEST_PR_AUC:.4f}` |",
         f"| Selected threshold | `{DEFAULT_THRESHOLD:.3f}` |",
         f"| Approval rate at selected threshold | `{pct(approval_rate)}` |",
         f"| Approved default rate | `{pct(approved_default_rate)}` |",
@@ -100,7 +104,7 @@ def build_report(artifact_dir: Path) -> str:
         f"| Recall for payment-difficulty applicants | `{pct(recall)}` |",
         f"| Specificity for normal-repayment applicants | `{pct(specificity)}` |",
         "",
-        "The Course 2 sampled run should not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.",
+        f"The final test ROC-AUC of `{DEFAULT_TEST_AUC:.4f}` confirms that the current Course 2 model ranks applicants meaningfully better than random on the held-out test split. The Course 2 result should still not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.",
         "",
         "## Threshold and Business Policy Interpretation",
         "",
@@ -162,4 +166,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
