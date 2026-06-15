@@ -159,7 +159,7 @@ def aggregate_categorical_indicators(
     if not existing_columns:
         return None
 
-    grouped_size = df.groupby(group_key).size().astype("float32")
+    grouped_size = cast(pd.Series, df.groupby(group_key).size()).astype("float32")
     aggregates: list[pd.DataFrame] = []
     max_categories = max(1, int(top_n))
 
@@ -170,7 +170,7 @@ def aggregate_categorical_indicators(
             category_mask = (values == category).astype("int8")
             count_name = f"{prefix}_{column}_{_safe_feature_token(category)}_COUNT"
             share_name = f"{prefix}_{column}_{_safe_feature_token(category)}_SHARE"
-            counts = category_mask.groupby(df[group_key]).sum().astype("float32")
+            counts = cast(pd.Series, category_mask.groupby(df[group_key]).sum()).astype("float32")
             frame = pd.DataFrame(
                 {
                     count_name: counts,

@@ -7,7 +7,7 @@ This model estimates payment-difficulty risk for Home Credit loan applicants. It
 ## Data
 
 - Rows: `50000`
-- Columns: `452`
+- Columns: `700`
 - Positive class rate: `0.0805`
 - Negative class rate: `0.9195`
 
@@ -23,9 +23,9 @@ This model estimates payment-difficulty risk for Home Credit loan applicants. It
 | Parameter | Value |
 | --- | --- |
 | Objective | custom_focal_loss |
-| Learning rate | 0.025 |
-| Num leaves | 48 |
-| Max depth | 12 |
+| Learning rate | 0.019898974384450128 |
+| Num leaves | 28 |
+| Max depth | 9 |
 | Imbalance strategy | focal_loss |
 
 ## Limitations
