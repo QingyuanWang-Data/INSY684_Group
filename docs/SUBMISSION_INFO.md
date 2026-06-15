@@ -25,7 +25,7 @@ Fill in this section before the final LMS submission.
 | --- | --- | --- | --- |
 | Qingyuan Wang | `qingyuan.wang@mail.mcgill.ca` | `QingyuanWang-Data` | Repository owner; integration and project coordination |
 | Yihang Shao | `yihang.shao@mail.mcgill.com` | `Hankpapa` | To be filled |
-| Xuechen Hong | `xuechen.hong@mail.mcgill.ca` | `xuechen-17` | To be filled |
+| Xuechen Hong | `xuechen.hong@mail.mcgill.ca` | `xuechen-17` | Business lead; business problem framing, success metrics, decision policy, business impact interpretation, fairness and governance narrative |
 | Yumeng Zhao | `yumeng.zhao@mail.mcgill.ca` | `yasmminee` | To be filled |
 
 ## Final Submission Checklist
