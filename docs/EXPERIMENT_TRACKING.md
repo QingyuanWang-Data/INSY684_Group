@@ -44,16 +44,19 @@ guardrails before release.
 ## Current Evidence Status
 
 The repository includes the implementation, tests, baseline artifact reports,
-and a fresh sampled experiment run completed on June 14, 2026.
+and a fresh sampled final-evaluation run completed on June 15, 2026.
 
 Sampled MLflow training run:
 
-- Run name: `sampled-50000-final`
-- Local MLflow run ID: `e39bb77d177f41298e7cc44275e5db30`
+- Run name: `sampled-50000-final-test`
+- Portable evidence: committed `artifacts/training_report.json`, plots, and
+  governance reports; local MLflow run IDs remain machine-specific.
 - Sample size: `50,000` application rows
 - Feature count: `450`
 - Train / validation / test split rows: `35,000 / 10,000 / 5,000`
 - Validation ROC-AUC: `0.7619`
+- Test ROC-AUC: `0.7644`
+- Test PR-AUC: `0.2309`
 - Train ROC-AUC: `0.9679`
 - Selected decision threshold: `0.549`
 - Output evidence: `artifacts/training_report.json` and `artifacts/plots/`

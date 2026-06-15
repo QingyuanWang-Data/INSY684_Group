@@ -4,28 +4,31 @@
 
 - Train ROC-AUC: `0.9679`
 - Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `n/a`
+- Test ROC-AUC: `0.7644`
 - Validation PR-AUC: `0.2545`
+- Test PR-AUC: `0.2309`
 - Threshold used: `0.549`
 - Validation Brier score: `0.1708`
 - Validation expected calibration error: `0.3173`
+- Test Brier score: `0.1718`
+- Test expected calibration error: `0.3188`
 
 ## Prediction Drift
 
 - Score PSI train vs validation: `0.013916` (stable)
-- Score PSI train vs test: `n/a` (not_available)
+- Score PSI train vs test: `0.012282` (stable)
 
 ## Feature Drift
 
 | Feature | Train vs validation PSI | Severity | Train vs test PSI | Severity |
 | --- | --- | --- | --- | --- |
-| AMT_CREDIT | 0.001828 | stable | n/a | not_available |
-| CREDIT_INCOME_RATIO | 0.001472 | stable | n/a | not_available |
-| ANNUITY_INCOME_RATIO | 0.001391 | stable | n/a | not_available |
-| DAYS_EMPLOYED | 0.001322 | stable | n/a | not_available |
-| AMT_ANNUITY | 0.001258 | stable | n/a | not_available |
-| DAYS_BIRTH | 0.001066 | stable | n/a | not_available |
-| AMT_INCOME_TOTAL | 0.000844 | stable | n/a | not_available |
+| AMT_CREDIT | 0.001828 | stable | 0.003718 | stable |
+| CREDIT_INCOME_RATIO | 0.001472 | stable | 0.001170 | stable |
+| ANNUITY_INCOME_RATIO | 0.001391 | stable | 0.004749 | stable |
+| DAYS_EMPLOYED | 0.001322 | stable | 0.001101 | stable |
+| AMT_ANNUITY | 0.001258 | stable | 0.001672 | stable |
+| DAYS_BIRTH | 0.001066 | stable | 0.001731 | stable |
+| AMT_INCOME_TOTAL | 0.000844 | stable | 0.002015 | stable |
 
 ## Policy Monitoring
 

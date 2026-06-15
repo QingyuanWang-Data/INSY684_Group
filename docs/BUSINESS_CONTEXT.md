@@ -11,7 +11,7 @@ rule-based.
   report final ROC-AUC on a held-out test set.
 - Operational objective: improve ranking quality of risky applicants while keeping approval
   throughput stable.
-- Current reference test ROC-AUC in this repository: `0.7858`
+- Current reference test ROC-AUC in this repository: `0.7644`
   (`artifacts/training_report.json`).
 
 ## Business Value Explanation

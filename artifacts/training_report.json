@@ -1,12 +1,12 @@
 {
   "artifact_path": "artifacts\\model_bundle.joblib",
-  "test_auc": null,
+  "test_auc": 0.7643659691970769,
   "train_auc": 0.9678512372219115,
   "validation_auc": 0.7618582878218313,
   "pr_auc": {
     "train": 0.7046334413811367,
     "validation": 0.25453140503250804,
-    "test": null
+    "test": 0.23092830823474972
   },
   "scale_pos_weight": 11.428977272727273,
   "imbalance_strategy": "focal_loss",
@@ -28,7 +28,7 @@
   "train_rows": 35000,
   "valid_rows": 10000,
   "test_rows": 5000,
-  "trained_at_utc": "2026-06-14T16:58:21.074387+00:00",
+  "trained_at_utc": "2026-06-15T02:29:11.919707+00:00",
   "dataset_size": {
     "rows": 50000,
     "columns": 452
@@ -960,6 +960,21 @@
         "expected_cost": 3330.0,
         "expected_cost_per_applicant": 0.333,
         "expected_cost_per_1000": 333.0
+      },
+      "test": {
+        "approvals": 4457,
+        "declines": 543,
+        "approval_rate": 0.8914,
+        "decline_rate": 0.1086,
+        "approved_default_count": 255,
+        "approved_good_count": 4202,
+        "default_rate_within_approved": 0.0572133722234687,
+        "good_rate_within_approved": 0.9427866277765313,
+        "false_decline_count": 396,
+        "captured_default_count": 147,
+        "expected_cost": 1671.0,
+        "expected_cost_per_applicant": 0.3342,
+        "expected_cost_per_1000": 334.2
       }
     }
   },
@@ -1195,6 +1210,103 @@
           "mean_predicted_probability": 0.7124885309274357,
           "observed_default_rate": 0.6666666666666666,
           "absolute_gap": 0.04582186426076906
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "count": 0,
+          "mean_predicted_probability": 0.0,
+          "observed_default_rate": 0.0,
+          "absolute_gap": 0.0
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "count": 0,
+          "mean_predicted_probability": 0.0,
+          "observed_default_rate": 0.0,
+          "absolute_gap": 0.0
+        }
+      ]
+    },
+    "test": {
+      "brier_score": 0.17180079997076117,
+      "expected_calibration_error": 0.3187996227153661,
+      "n_bins": 10,
+      "bins": [
+        {
+          "bin_index": 0,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "count": 0,
+          "mean_predicted_probability": 0.0,
+          "observed_default_rate": 0.0,
+          "absolute_gap": 0.0
+        },
+        {
+          "bin_index": 1,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "count": 70,
+          "mean_predicted_probability": 0.1841821313427599,
+          "observed_default_rate": 0.014285714285714285,
+          "absolute_gap": 0.1698964170570456
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.2,
+          "bin_upper": 0.30000000000000004,
+          "count": 975,
+          "mean_predicted_probability": 0.26180744102750103,
+          "observed_default_rate": 0.014358974358974359,
+          "absolute_gap": 0.24744846666852668
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.30000000000000004,
+          "bin_upper": 0.4,
+          "count": 1619,
+          "mean_predicted_probability": 0.35037862399564434,
+          "observed_default_rate": 0.03891290920321186,
+          "absolute_gap": 0.31146571479243246
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "count": 1317,
+          "mean_predicted_probability": 0.445976772136489,
+          "observed_default_rate": 0.08048595292331055,
+          "absolute_gap": 0.36549081921317844
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6000000000000001,
+          "count": 799,
+          "mean_predicted_probability": 0.5425989487034911,
+          "observed_default_rate": 0.18397997496871088,
+          "absolute_gap": 0.35861897373478024
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.6000000000000001,
+          "bin_upper": 0.7000000000000001,
+          "count": 213,
+          "mean_predicted_probability": 0.6323130293027559,
+          "observed_default_rate": 0.30985915492957744,
+          "absolute_gap": 0.32245387437317846
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.7000000000000001,
+          "bin_upper": 0.8,
+          "count": 7,
+          "mean_predicted_probability": 0.7129324324653162,
+          "observed_default_rate": 0.7142857142857143,
+          "absolute_gap": 0.0013532818203980668
         },
         {
           "bin_index": 8,
@@ -1499,69 +1611,227 @@
           "max_positive_rate_gap": 0.02094122574944894
         }
       }
+    },
+    "test": {
+      "enabled": true,
+      "split": "test",
+      "threshold": 0.549,
+      "min_group_size": 500,
+      "columns": {
+        "CODE_GENDER": {
+          "groups": [
+            {
+              "group": "F",
+              "count": 3315,
+              "positive_rate": 0.07149321266968325,
+              "auc": 0.7716652547135928,
+              "pr_auc": 0.2388437696171899,
+              "recall": 0.3333333333333333,
+              "specificity": 0.9314489928525016,
+              "approval_rate": 0.9125188536953243,
+              "default_rate_within_approved": 0.05223140495867769
+            },
+            {
+              "group": "M",
+              "count": 1685,
+              "positive_rate": 0.09792284866468842,
+              "auc": 0.7414274322169059,
+              "pr_auc": 0.22518177095905495,
+              "recall": 0.4121212121212121,
+              "specificity": 0.8782894736842105,
+              "approval_rate": 0.8498516320474777,
+              "default_rate_within_approved": 0.06773743016759777
+            }
+          ],
+          "max_auc_gap": 0.03023782249668694,
+          "max_recall_gap": 0.0787878787878788,
+          "max_approval_rate_gap": 0.06266722164784655,
+          "max_positive_rate_gap": 0.02642963599500517
+        },
+        "NAME_CONTRACT_TYPE": {
+          "groups": [
+            {
+              "group": "Cash loans",
+              "count": 4553,
+              "positive_rate": 0.08214364155501867,
+              "auc": 0.7682971772537246,
+              "pr_auc": 0.24074384550592337,
+              "recall": 0.3850267379679144,
+              "specificity": 0.9131371141421393,
+              "approval_rate": 0.8886448495497474,
+              "default_rate_within_approved": 0.056846267918932276
+            }
+          ],
+          "max_auc_gap": null,
+          "max_recall_gap": null,
+          "max_approval_rate_gap": null,
+          "max_positive_rate_gap": null
+        },
+        "NAME_INCOME_TYPE": {
+          "groups": [
+            {
+              "group": "Working",
+              "count": 2565,
+              "positive_rate": 0.09785575048732943,
+              "auc": 0.7590640032781578,
+              "pr_auc": 0.2475400589664044,
+              "recall": 0.398406374501992,
+              "specificity": 0.8824546240276577,
+              "approval_rate": 0.8549707602339182,
+              "default_rate_within_approved": 0.06885544915640675
+            },
+            {
+              "group": "Commercial associate",
+              "count": 1189,
+              "positive_rate": 0.07401177460050462,
+              "auc": 0.7355193625629594,
+              "pr_auc": 0.23182928712148373,
+              "recall": 0.3068181818181818,
+              "specificity": 0.9318801089918256,
+              "approval_rate": 0.9142136248948697,
+              "default_rate_within_approved": 0.05611775528978841
+            },
+            {
+              "group": "Pensioner",
+              "count": 876,
+              "positive_rate": 0.05593607305936073,
+              "auc": 0.775658268144017,
+              "pr_auc": 0.24262980269447973,
+              "recall": 0.30612244897959184,
+              "specificity": 0.9709794437726723,
+              "approval_rate": 0.9554794520547946,
+              "default_rate_within_approved": 0.04062126642771804
+            }
+          ],
+          "max_auc_gap": 0.04013890558105759,
+          "max_recall_gap": 0.09228392552240017,
+          "max_approval_rate_gap": 0.1005086918208764,
+          "max_positive_rate_gap": 0.041919677427968705
+        },
+        "NAME_EDUCATION_TYPE": {
+          "groups": [
+            {
+              "group": "Secondary / secondary special",
+              "count": 3603,
+              "positive_rate": 0.09297807382736609,
+              "auc": 0.7558806335519465,
+              "pr_auc": 0.24747670375903677,
+              "recall": 0.3970149253731343,
+              "specificity": 0.8965728274173806,
+              "approval_rate": 0.8692756036636137,
+              "default_rate_within_approved": 0.06449553001277139
+            },
+            {
+              "group": "Higher education",
+              "count": 1167,
+              "positive_rate": 0.04284490145672665,
+              "auc": 0.7531244404655326,
+              "pr_auc": 0.15013752536858863,
+              "recall": 0.18,
+              "specificity": 0.9650850492390332,
+              "approval_rate": 0.9588688946015425,
+              "default_rate_within_approved": 0.03663985701519214
+            }
+          ],
+          "max_auc_gap": 0.0027561930864138384,
+          "max_recall_gap": 0.21701492537313433,
+          "max_approval_rate_gap": 0.08959329093792878,
+          "max_positive_rate_gap": 0.05013317237063944
+        },
+        "NAME_FAMILY_STATUS": {
+          "groups": [
+            {
+              "group": "Married",
+              "count": 3152,
+              "positive_rate": 0.07836294416243655,
+              "auc": 0.7583839115861944,
+              "pr_auc": 0.22811002474230496,
+              "recall": 0.3603238866396761,
+              "specificity": 0.9187607573149742,
+              "approval_rate": 0.8968908629441624,
+              "default_rate_within_approved": 0.05588963565617262
+            },
+            {
+              "group": "Single / not married",
+              "count": 749,
+              "positive_rate": 0.08811748998664887,
+              "auc": 0.7585518434713164,
+              "pr_auc": 0.21809897445803486,
+              "recall": 0.4090909090909091,
+              "specificity": 0.8960468521229868,
+              "approval_rate": 0.8691588785046729,
+              "default_rate_within_approved": 0.059907834101382486
+            }
+          ],
+          "max_auc_gap": 0.00016793188512198576,
+          "max_recall_gap": 0.04876702245123299,
+          "max_approval_rate_gap": 0.027731984439489543,
+          "max_positive_rate_gap": 0.009754545824212313
+        }
+      }
     }
   },
   "drift_summary": {
     "score_distribution": {
       "train_vs_validation_psi": 0.0139163408055446,
       "train_vs_validation_severity": "stable",
-      "train_vs_test_psi": null,
-      "train_vs_test_severity": "not_available"
+      "train_vs_test_psi": 0.012281962257563723,
+      "train_vs_test_severity": "stable"
     },
     "feature_distribution": {
       "rows": [
         {
           "feature": "AMT_INCOME_TOTAL",
           "train_vs_validation_psi": 0.000844376125637813,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.002014665194036832,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "AMT_CREDIT",
           "train_vs_validation_psi": 0.0018279903010161192,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.0037183087993852117,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "AMT_ANNUITY",
           "train_vs_validation_psi": 0.0012575503035257537,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.0016721779691602696,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "DAYS_BIRTH",
           "train_vs_validation_psi": 0.0010663031953969105,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.00173117203517807,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "DAYS_EMPLOYED",
           "train_vs_validation_psi": 0.0013223097859471904,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.0011012871914755182,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "CREDIT_INCOME_RATIO",
           "train_vs_validation_psi": 0.0014719840671474464,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.0011696020239250027,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         },
         {
           "feature": "ANNUITY_INCOME_RATIO",
           "train_vs_validation_psi": 0.001390832058287379,
-          "train_vs_test_psi": null,
+          "train_vs_test_psi": 0.0047490558277400565,
           "train_vs_validation_severity": "stable",
-          "train_vs_test_severity": "not_available"
+          "train_vs_test_severity": "stable"
         }
       ],
       "max_train_vs_validation_psi": 0.0018279903010161192,
-      "max_train_vs_test_psi": null
+      "max_train_vs_test_psi": 0.0047490558277400565
     }
   },
   "best_iteration": 283,
@@ -2857,13 +3127,50 @@
         "fpr": 0.0826536160957042,
         "fnr": 0.6385093167701863
       }
+    },
+    "test": {
+      "threshold": 0.549,
+      "matrix": [
+        [
+          4202,
+          396
+        ],
+        [
+          255,
+          147
+        ]
+      ],
+      "normalized_matrix": [
+        [
+          0.9138755980861244,
+          0.0861244019138756
+        ],
+        [
+          0.6343283582089553,
+          0.3656716417910448
+        ]
+      ],
+      "counts": {
+        "tn": 4202,
+        "fp": 396,
+        "fn": 255,
+        "tp": 147
+      },
+      "rates": {
+        "accuracy": 0.8698,
+        "precision": 0.27071823204419887,
+        "recall": 0.3656716417910448,
+        "specificity": 0.9138755980861244,
+        "fpr": 0.0861244019138756,
+        "fnr": 0.6343283582089553
+      }
     }
   },
-  "test_evaluated": false,
+  "test_evaluated": true,
   "roc_auc": {
     "train": 0.9678512372219115,
     "validation": 0.7618582878218313,
-    "test": null
+    "test": 0.7643659691970769
   },
   "dependency_snapshot": {
     "python_version": "3.13.5",
@@ -2880,5 +3187,5 @@
       "optuna": "4.9.0"
     }
   },
-  "report_generated_at_utc": "2026-06-14T16:58:21.187910+00:00"
+  "report_generated_at_utc": "2026-06-15T02:29:12.078176+00:00"
 }

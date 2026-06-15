@@ -14,13 +14,15 @@ into the group's final slide deck.
 
 ## Latest Evidence Included
 
-- Sampled MLflow run: `sampled-50000-final`
+- Sampled MLflow run: `sampled-50000-final-test`
+- Test ROC-AUC: `0.7644`
 - Validation ROC-AUC: `0.7619`
 - Optuna best validation ROC-AUC: `0.7679`
 - Validation PR-AUC: `0.2545`
+- Test PR-AUC: `0.2309`
 - Selected threshold: `0.549`
 - Feature count: `450`
-- Evidence date: `2026-06-14`
+- Evidence date: `2026-06-15`
 
 ## Final Deck Reminder
 
