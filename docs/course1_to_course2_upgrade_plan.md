@@ -35,6 +35,24 @@ In business terms, Course 1 answered the question:
 The answer was yes. The model produced a risk score that could support underwriting and credit
 risk decisions.
 
+## Current Course 2 Progress
+
+The team has started implementing the Course 2 production-oriented upgrade on the technical
+branch. Current evidence includes:
+
+| Area | Current Course 2 progress |
+| --- | --- |
+| Experiment tracking | MLflow hooks and a sampled run summary are documented |
+| Hyperparameter tuning | Optuna tuning produced a best sampled validation ROC-AUC of `0.7679` |
+| Monitoring | PSI-based score and feature drift reports are generated |
+| Fairness | Subgroup metrics are generated for gender, income type, education, family status, and contract type |
+| Decision policy | Threshold `0.549` is used in current validation policy evidence |
+| Deployment | FastAPI readiness, Docker runtime, and cloud-native deployment notes are documented |
+| CI/CD | Quality and Docker build workflows are included |
+
+The business work should now shift from only planning the upgrade to interpreting these outputs
+for final reporting and presentation.
+
 ## Course 2 Improvement Goals
 
 Course 2 should not only aim for a better model score. It should improve how the model is built,
@@ -63,4 +81,3 @@ The final project should tell this story:
 4. We connected model outputs to lending policy through business metrics and decision bands.
 5. We considered explainability, fairness, monitoring, and deployment risks.
 6. We identified what would still need validation before real business use.
-

@@ -1,0 +1,71 @@
+# Business Policy Summary
+
+## Purpose
+
+This report translates the current model evidence from the technical branch into business-facing policy language. It is intended for the business lead, final presentation, and project documentation. It should be refreshed when model artifacts or threshold policy change.
+
+## Model Evidence Snapshot
+
+| Item | Current evidence |
+| --- | ---: |
+| Course 1 reference test ROC-AUC | `0.7858` |
+| Course 2 sampled MLflow validation ROC-AUC | `0.7619` |
+| Course 2 Optuna best validation ROC-AUC | `0.7679` |
+| Selected threshold | `0.549` |
+| Approval rate at selected threshold | `89.49%` |
+| Approved default rate | `5.74%` |
+| Expected cost per applicant | `0.3330` |
+| Recall for payment-difficulty applicants | `36.15%` |
+| Specificity for normal-repayment applicants | `91.73%` |
+
+The Course 2 sampled run should not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.
+
+## Threshold and Business Policy Interpretation
+
+At threshold `0.549`, the current policy approves about `89.49%` of applicants in the validation sample, with an approved default rate of about `5.74%`. This supports a growth-oriented policy, but it still misses a meaningful share of risky applicants because recall is about `36.15%`.
+
+The cost-sensitivity table shows the expected policy tradeoff:
+
+| False negative cost | Selected threshold | Approval rate | Approved default rate | Recall |
+| ---: | ---: | ---: | ---: | ---: |
+| `2.5` | `0.6078` | `96.47%` | `6.91%` | `17.14%` |
+| `5.0` | `0.5490` | `89.49%` | `5.74%` | `36.15%` |
+| `7.5` | `0.4902` | `78.16%` | `4.61%` | `55.28%` |
+| `10.0` | `0.4510` | `68.62%` | `3.82%` | `67.45%` |
+| `15.0` | `0.4020` | `54.48%` | `2.97%` | `79.88%` |
+
+When false negatives become more expensive, the selected threshold moves lower. Lower thresholds catch more risky applicants but reduce approval volume and increase manual review or stricter-treatment cases.
+
+| Business objective | Likely threshold direction | Expected impact |
+| --- | --- | --- |
+| Protect approval volume and customer growth | Higher threshold | More approvals, but higher risk leakage |
+| Reduce missed risky borrowers | Lower threshold | More risk capture, but more applicants delayed or rejected |
+| Balance growth and risk | Three-band policy | Low risk auto-approve, medium risk review, high risk stricter treatment |
+
+## Fairness and Governance Interpretation
+
+The current subgroup report shows meaningful recall and approval-rate differences across applicant groups. Examples:
+
+- Gender recall gap: female applicants have recall `0.3126`, while male applicants have recall `0.4290`, a gap of about `0.1164`.
+- Income-type recall gap: pensioner applicants have recall `0.1800`, while working applicants have recall `0.4188`, a gap of about `0.2388`.
+- Family-status recall gap: widow applicants have recall `0.1395`, while single / not married applicants have recall `0.4266`, a gap of about `0.2870`.
+
+These gaps do not automatically prove unfairness, but they are strong reasons to avoid fully automated denial decisions. They should trigger review before any threshold is used in a real lending process.
+
+Recommended controls:
+
+- Keep human review for medium-risk and borderline cases.
+- Recompute subgroup metrics after retraining, threshold changes, or data updates.
+- Track recall, specificity, approval rate, and approved default rate by subgroup.
+- Avoid presenting the model as a fully automated credit denial engine.
+
+## Business Recommendation
+
+Use the model as a credit-risk decision-support system rather than a fully automated lending decision engine. The recommended business framing is:
+
+1. Low-risk band: consider auto-approval or standard terms.
+2. Medium-risk band: route to manual review.
+3. High-risk band: consider decline, lower credit limit, stricter pricing, or additional documentation.
+
+Before final submission, this report should be updated with the final `main` branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.
+

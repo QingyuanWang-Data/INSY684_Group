@@ -116,6 +116,26 @@ Recommended Course 2 improvements:
 - Connect threshold selection to business costs and approval policy.
 - Maintain GitHub collaboration through branches, commits, pull requests, and CI checks.
 
+## Current Course 2 Evidence to Incorporate
+
+The technical branch now includes a sampled MLflow training run, Optuna tuning evidence,
+fairness report, monitoring report, and deployment documentation.
+
+Current evidence includes:
+
+- Course 2 sampled MLflow validation ROC-AUC: `0.7619`.
+- Course 2 sampled validation PR-AUC: `0.2545`.
+- Optuna best sampled validation ROC-AUC: `0.7679`.
+- Selected threshold: `0.549`.
+- Validation approval rate at selected threshold: `89.49%`.
+- Approved default rate at selected threshold: `5.74%`.
+- Expected validation cost per applicant: `0.3330`.
+
+These results should be presented carefully. The Course 2 run is not only a model-score
+comparison against the Course 1 reference result. It also adds production-oriented capabilities
+such as experiment tracking, hyperparameter tuning, monitoring, fairness review, Docker, CI, and
+deployment documentation.
+
 ## Business Lead Contribution
 
 The business lead should ensure the final project answers these questions clearly:
@@ -127,4 +147,3 @@ The business lead should ensure the final project answers these questions clearl
 5. What are the risks of using the model?
 6. How should fairness, explainability, and monitoring be handled?
 7. What should be improved before the model is used in a real lending process?
-

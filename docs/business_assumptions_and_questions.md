@@ -35,21 +35,23 @@ These are planning estimates only. They should not be presented as proven saving
 ## Questions for the Technical Team
 
 The business lead needs the following information from the technical team as the project
-progresses:
+progresses. Some items now have initial answers from the technical branch, but they should be
+confirmed again before final merge to `main`.
 
-1. Which model will be treated as the Course 2 main model?
-2. What is the new validation and test ROC-AUC?
-3. Is PR-AUC being reported because the default class is rare?
-4. What threshold or risk band cutoffs are being used?
-5. What are the confusion matrix results at the selected threshold?
-6. What approval rate does the selected policy imply?
-7. What is the estimated default rate among approved applicants?
-8. Are MLflow or other tracking tools recording parameters, metrics, and artifacts?
-9. Are model artifacts versioned clearly?
-10. Which subgroup metrics are available for fairness review?
-11. Are there drift monitoring outputs for data, score, or performance changes?
-12. How will the model be served or demonstrated in the final project?
-13. Which tests and CI checks are required before merging work?
+| Question | Current answer / next step |
+| --- | --- |
+| Which model will be treated as the Course 2 main model? | Initial sampled LightGBM/focal-loss run exists; confirm final model before merging to `main`. |
+| What is the new validation and test ROC-AUC? | Current sampled validation ROC-AUC is `0.7619`; test ROC-AUC is not available in the sampled report. |
+| Is PR-AUC being reported because the default class is rare? | Yes, current sampled validation PR-AUC is `0.2545`. |
+| What threshold or risk band cutoffs are being used? | Current selected threshold is `0.549`; final risk-band cutoffs still need agreement. |
+| What are the confusion matrix results at the selected threshold? | Validation matrix: true 0 predicted 0/1 = `8435/760`; true 1 predicted 0/1 = `514/291`. |
+| What approval rate does the selected policy imply? | Current validation approval rate is `89.49%`. |
+| What is the estimated default rate among approved applicants? | Current approved default rate is `5.74%`. |
+| Are MLflow or other tracking tools recording parameters, metrics, and artifacts? | MLflow hooks and sampled run evidence are documented; final run evidence should be captured for slides. |
+| Which subgroup metrics are available for fairness review? | Gender, income type, contract type, education, and family status subgroup metrics are available. |
+| Are there drift monitoring outputs? | Score and feature PSI monitoring outputs are available in the technical branch. |
+| How will the model be served or demonstrated? | FastAPI, readiness endpoint, Docker runtime, and deployment notes are documented. |
+| Which tests and CI checks are required before merging work? | Quality checks, pytest, and Docker build workflow exist; final branch should pass checks before merging to `main`. |
 
 ## Questions for the Business Lead
 
@@ -65,16 +67,15 @@ The business lead should continue refining:
 
 ## Items to Update Later
 
-This document should be updated after the team completes more technical work.
+This document should be updated after the team finalizes the `main` branch version.
 
 Expected updates:
 
-- Replace planning assumptions with model-based policy results if available.
-- Add the selected Course 2 model metrics.
+- Replace sampled evidence with final model-based policy results if available.
+- Add the selected final Course 2 model metrics.
 - Add the selected threshold or risk band cutoffs.
 - Add business interpretation of confusion matrix results.
 - Add fairness findings from subgroup analysis.
 - Add monitoring recommendations based on drift outputs.
 - Add final deployment and demo notes.
-
 

@@ -1,0 +1,4 @@
+scenario,annual_applications,approval_rate,approved_loans,average_funded_amount,baseline_default_rate,loss_given_default,baseline_expected_loss,default_reduction_assumption,estimated_annual_savings,notes
+Conservative,100000,0.60,60000,8000,0.06,0.45,12960000,0.04,518400,Small improvement in approved-default reduction from better risk ranking
+Moderate,100000,0.60,60000,8000,0.06,0.45,12960000,0.065,842400,Middle planning case for business impact discussion
+Upside,100000,0.60,60000,8000,0.06,0.45,12960000,0.09,1166400,Optimistic case that requires policy validation before use

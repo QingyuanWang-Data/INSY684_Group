@@ -62,6 +62,23 @@ If the threshold is higher:
 
 This tradeoff should be evaluated using both machine learning metrics and business metrics.
 
+## Current Threshold Evidence
+
+The current technical branch uses threshold `0.549` for validation policy evidence. At this
+threshold:
+
+- Approval rate: `89.49%`.
+- Approved default rate: `5.74%`.
+- Recall for payment-difficulty applicants: `36.15%`.
+- Specificity for normal-repayment applicants: `91.73%`.
+- Expected validation cost per applicant: `0.3330`.
+
+The cost-sensitivity evidence shows that when false negatives become more expensive, the
+selected threshold moves lower. This catches more risky applicants but reduces approval volume.
+For example, a false-negative cost of `15.0` selects threshold `0.4020`, with approval rate
+`54.48%` and recall `79.88%`. This is much more risk-control oriented than the current
+threshold `0.549`.
+
 ## Metrics for Policy Evaluation
 
 The team should evaluate candidate thresholds using:
@@ -106,12 +123,11 @@ governance. Before real business use, the team would need:
 
 ## Current Project Position
 
-At the current stage, the decision policy is a planning framework. Once the team has updated
-Course 2 model results, this document should be revised with:
+At the current stage, the decision policy is partly supported by validation evidence from the
+technical branch. Before final submission, this document should be revised with:
 
 - The selected model version.
 - The selected threshold or risk band cutoffs.
-- Validation and test performance at the selected policy.
+- Final validation and test performance at the selected policy.
 - Business impact estimates.
 - Fairness and subgroup findings.
-
