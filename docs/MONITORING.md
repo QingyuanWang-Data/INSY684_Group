@@ -2,11 +2,11 @@
 
 ## Current Model Snapshot
 
-- Train ROC-AUC: `0.9679`
-- Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `0.7644`
-- Validation PR-AUC: `0.2545`
-- Test PR-AUC: `0.2309`
+- Train ROC-AUC: `0.9160`
+- Validation ROC-AUC: `0.7666`
+- Test ROC-AUC: `0.7647`
+- Validation PR-AUC: `0.2588`
+- Test PR-AUC: `0.2303`
 - Threshold used: `0.549`
 - Validation Brier score: `0.1708`
 - Validation expected calibration error: `0.3173`

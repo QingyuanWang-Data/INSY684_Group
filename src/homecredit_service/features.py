@@ -28,6 +28,29 @@ TABLE_TEMPORAL_CUTOFFS: dict[str, tuple[str, ...]] = {
     "credit_card_balance": ("MONTHS_BALANCE",),
 }
 ID_COLUMNS = (ID_COLUMN, "SK_ID_BUREAU", "SK_ID_PREV")
+CATEGORICAL_AGGREGATION_COLUMNS: dict[str, tuple[str, ...]] = {
+    "bureau": ("CREDIT_ACTIVE", "CREDIT_CURRENCY", "CREDIT_TYPE"),
+    "bureau_balance": ("STATUS",),
+    "previous_application": (
+        "NAME_CONTRACT_TYPE",
+        "WEEKDAY_APPR_PROCESS_START",
+        "FLAG_LAST_APPL_PER_CONTRACT",
+        "NAME_CASH_LOAN_PURPOSE",
+        "NAME_CONTRACT_STATUS",
+        "NAME_PAYMENT_TYPE",
+        "CODE_REJECT_REASON",
+        "NAME_CLIENT_TYPE",
+        "NAME_GOODS_CATEGORY",
+        "NAME_PORTFOLIO",
+        "NAME_PRODUCT_TYPE",
+        "CHANNEL_TYPE",
+        "NAME_SELLER_INDUSTRY",
+        "NAME_YIELD_GROUP",
+        "PRODUCT_COMBINATION",
+    ),
+    "POS_CASH_balance": ("NAME_CONTRACT_STATUS",),
+    "credit_card_balance": ("NAME_CONTRACT_STATUS",),
+}
 
 
 def safe_divide(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
@@ -118,6 +141,50 @@ def aggregate_numeric(
     return grouped.join(grouped_size, how="left").rename_axis(group_key)
 
 
+def _safe_feature_token(value: object) -> str:
+    token = str(value).strip().upper()
+    cleaned = [character if character.isalnum() else "_" for character in token]
+    collapsed = "_".join(part for part in "".join(cleaned).split("_") if part)
+    return collapsed[:48] or "MISSING"
+
+
+def aggregate_categorical_indicators(
+    df: pd.DataFrame,
+    group_key: str,
+    prefix: str,
+    columns: Iterable[str],
+    top_n: int = 8,
+) -> pd.DataFrame | None:
+    existing_columns = [column for column in columns if column in df.columns]
+    if not existing_columns:
+        return None
+
+    grouped_size = df.groupby(group_key).size().astype("float32")
+    aggregates: list[pd.DataFrame] = []
+    max_categories = max(1, int(top_n))
+
+    for column in existing_columns:
+        values = df[column].astype("string").fillna("MISSING").replace("<NA>", "MISSING")
+        top_categories = values.value_counts(dropna=False).head(max_categories).index.tolist()
+        for category in top_categories:
+            category_mask = (values == category).astype("int8")
+            count_name = f"{prefix}_{column}_{_safe_feature_token(category)}_COUNT"
+            share_name = f"{prefix}_{column}_{_safe_feature_token(category)}_SHARE"
+            counts = category_mask.groupby(df[group_key]).sum().astype("float32")
+            frame = pd.DataFrame(
+                {
+                    count_name: counts,
+                    share_name: safe_divide(counts, grouped_size).astype("float32"),
+                }
+            )
+            aggregates.append(frame)
+
+    if not aggregates:
+        return None
+
+    return pd.concat(aggregates, axis=1).rename_axis(group_key)
+
+
 def build_auxiliary_aggregates(
     data_dir: Path, filter_keys: set[int] | None = None
 ) -> list[pd.DataFrame]:
@@ -129,15 +196,31 @@ def build_auxiliary_aggregates(
         bureau = bureau[bureau[ID_COLUMN].isin(filter_keys)]
     bureau_agg = aggregate_numeric(bureau, ID_COLUMN, "BUREAU", drop_columns=["SK_ID_BUREAU"])
     aggregates.append(bureau_agg)
+    bureau_cat_agg = aggregate_categorical_indicators(
+        bureau,
+        ID_COLUMN,
+        "BUREAU_CAT",
+        CATEGORICAL_AGGREGATION_COLUMNS["bureau"],
+    )
+    if bureau_cat_agg is not None:
+        aggregates.append(bureau_cat_agg)
 
     bureau_map = bureau[["SK_ID_BUREAU", ID_COLUMN]].drop_duplicates()
     bureau_balance = read_csv(data_dir / "bureau_balance.csv")
     bureau_balance = filter_by_temporal_cutoff(
         bureau_balance, TABLE_TEMPORAL_CUTOFFS["bureau_balance"]
     )
+    bureau_balance = bureau_balance.merge(bureau_map, on="SK_ID_BUREAU", how="inner")
+    bureau_balance_cat_agg = aggregate_categorical_indicators(
+        bureau_balance,
+        ID_COLUMN,
+        "BUREAU_BAL_CAT",
+        CATEGORICAL_AGGREGATION_COLUMNS["bureau_balance"],
+    )
+    if bureau_balance_cat_agg is not None:
+        aggregates.append(bureau_balance_cat_agg)
     status_map = {"X": -1, "C": 0, "0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5}
     bureau_balance["STATUS_NUM"] = bureau_balance["STATUS"].map(status_map).astype("float32")
-    bureau_balance = bureau_balance.merge(bureau_map, on="SK_ID_BUREAU", how="inner")
     bureau_balance = bureau_balance.drop(columns=["SK_ID_BUREAU", "STATUS"])
     bureau_balance_agg = aggregate_numeric(bureau_balance, ID_COLUMN, "BUREAU_BAL")
     aggregates.append(bureau_balance_agg)
@@ -150,6 +233,14 @@ def build_auxiliary_aggregates(
         previous_app = previous_app[previous_app[ID_COLUMN].isin(filter_keys)]
     previous_agg = aggregate_numeric(previous_app, ID_COLUMN, "PREV", drop_columns=["SK_ID_PREV"])
     aggregates.append(previous_agg)
+    previous_cat_agg = aggregate_categorical_indicators(
+        previous_app,
+        ID_COLUMN,
+        "PREV_CAT",
+        CATEGORICAL_AGGREGATION_COLUMNS["previous_application"],
+    )
+    if previous_cat_agg is not None:
+        aggregates.append(previous_cat_agg)
 
     pos_cash = read_csv(data_dir / "POS_CASH_balance.csv")
     pos_cash = filter_by_temporal_cutoff(pos_cash, TABLE_TEMPORAL_CUTOFFS["POS_CASH_balance"])
@@ -157,6 +248,14 @@ def build_auxiliary_aggregates(
         pos_cash = pos_cash[pos_cash[ID_COLUMN].isin(filter_keys)]
     pos_agg = aggregate_numeric(pos_cash, ID_COLUMN, "POS", drop_columns=["SK_ID_PREV"])
     aggregates.append(pos_agg)
+    pos_cat_agg = aggregate_categorical_indicators(
+        pos_cash,
+        ID_COLUMN,
+        "POS_CAT",
+        CATEGORICAL_AGGREGATION_COLUMNS["POS_CASH_balance"],
+    )
+    if pos_cat_agg is not None:
+        aggregates.append(pos_cat_agg)
 
     installments = read_csv(data_dir / "installments_payments.csv")
     installments = filter_by_temporal_cutoff(
@@ -180,6 +279,14 @@ def build_auxiliary_aggregates(
         credit_card = credit_card[credit_card[ID_COLUMN].isin(filter_keys)]
     credit_card_agg = aggregate_numeric(credit_card, ID_COLUMN, "CC", drop_columns=["SK_ID_PREV"])
     aggregates.append(credit_card_agg)
+    credit_card_cat_agg = aggregate_categorical_indicators(
+        credit_card,
+        ID_COLUMN,
+        "CC_CAT",
+        CATEGORICAL_AGGREGATION_COLUMNS["credit_card_balance"],
+    )
+    if credit_card_cat_agg is not None:
+        aggregates.append(credit_card_cat_agg)
 
     return aggregates
 

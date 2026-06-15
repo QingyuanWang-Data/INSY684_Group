@@ -54,10 +54,10 @@ Sampled MLflow training run:
 - Sample size: `50,000` application rows
 - Feature count: `450`
 - Train / validation / test split rows: `35,000 / 10,000 / 5,000`
-- Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `0.7644`
-- Test PR-AUC: `0.2309`
-- Train ROC-AUC: `0.9679`
+- Validation ROC-AUC: `0.7666`
+- Test ROC-AUC: `0.7647`
+- Test PR-AUC: `0.2303`
+- Train ROC-AUC: `0.9160`
 - Selected decision threshold: `0.549`
 - Output evidence: `artifacts/training_report.json` and `artifacts/plots/`
 

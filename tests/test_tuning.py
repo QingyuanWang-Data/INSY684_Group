@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from homecredit_service.train import load_tuned_hyperparameters
 from homecredit_service.tune import suggest_lightgbm_params, write_tuning_outputs
 
 
@@ -52,3 +53,24 @@ def test_write_tuning_outputs(tmp_path: Path) -> None:
     assert report["best_value"] == 0.75
     assert report["metadata"]["metric"] == "validation_auc"
     assert (tmp_path / "tuning_trials.csv").exists()
+
+
+def test_load_tuned_hyperparameters_filters_to_supported_training_keys(tmp_path: Path) -> None:
+    report_path = tmp_path / "tuning_report.json"
+    report_path.write_text(
+        json.dumps(
+            {
+                "best_params": {
+                    "num_leaves": 32,
+                    "learning_rate": 0.02,
+                    "random_state": 123,
+                    "objective": "binary",
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    params = load_tuned_hyperparameters(report_path)
+
+    assert params == {"num_leaves": 32, "learning_rate": 0.02}

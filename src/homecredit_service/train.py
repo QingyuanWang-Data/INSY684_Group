@@ -113,6 +113,15 @@ def parse_args() -> argparse.Namespace:
         help="Minimum rows required before reporting subgroup metrics.",
     )
     parser.add_argument(
+        "--tuning-report",
+        type=Path,
+        default=None,
+        help=(
+            "Optional Optuna tuning report containing best_params. "
+            "Defaults to <artifact-dir>/tuning_report.json when present."
+        ),
+    )
+    parser.add_argument(
         "--final-eval",
         action="store_true",
         help="Evaluate on held-out test set and include test_auc in the report.",
@@ -157,6 +166,33 @@ def collect_dependency_snapshot() -> dict[str, object]:
         "python_version": platform.python_version(),
         "packages": packages,
     }
+
+
+def load_tuned_hyperparameters(tuning_report_path: Path) -> dict[str, object] | None:
+    if not tuning_report_path.exists():
+        return None
+
+    report = json.loads(tuning_report_path.read_text(encoding="utf-8"))
+    raw_params = report.get("best_params")
+    if not isinstance(raw_params, dict):
+        msg = f"Tuning report does not contain a best_params object: {tuning_report_path}"
+        raise ValueError(msg)
+
+    allowed_keys = {
+        "n_estimators",
+        "learning_rate",
+        "num_leaves",
+        "min_child_samples",
+        "subsample",
+        "colsample_bytree",
+        "reg_alpha",
+        "reg_lambda",
+        "max_depth",
+    }
+    tuned_params: dict[str, object] = {
+        key: value for key, value in raw_params.items() if key in allowed_keys
+    }
+    return tuned_params or None
 
 
 def _as_float_list(raw_value: object) -> list[float] | None:
@@ -609,6 +645,15 @@ def main() -> None:
         training_frame.shape[1],
     )
 
+    tuning_report_path = args.tuning_report or (args.artifact_dir / "tuning_report.json")
+    tuned_hyperparameters = load_tuned_hyperparameters(tuning_report_path)
+    if tuned_hyperparameters is not None:
+        logger.info(
+            "Using tuned hyperparameters from %s: %s",
+            tuning_report_path,
+            tuned_hyperparameters,
+        )
+
     bundle = train_lightgbm_model(
         train_df=training_frame,
         random_state=args.random_state,
@@ -625,6 +670,7 @@ def main() -> None:
         temporal_holdout_fraction=args.temporal_holdout_fraction,
         temporal_max_estimators=args.temporal_max_estimators,
         subgroup_min_size=args.subgroup_min_size,
+        hyperparameter_overrides=tuned_hyperparameters,
     )
     if args.final_eval:
         logger.info(

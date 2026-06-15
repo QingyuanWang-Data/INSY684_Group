@@ -13,9 +13,9 @@ This model estimates payment-difficulty risk for Home Credit loan applicants. It
 
 ## Performance
 
-- Train ROC-AUC: `0.9679`
-- Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `0.7644`
+- Train ROC-AUC: `0.9160`
+- Validation ROC-AUC: `0.7666`
+- Test ROC-AUC: `0.7647`
 - Threshold used: `0.549`
 
 ## Key Parameters

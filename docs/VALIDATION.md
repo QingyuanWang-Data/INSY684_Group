@@ -7,8 +7,8 @@
 
 ## Baseline Comparison
 - Null/random ranking baseline: ROC-AUC = 0.50.
-- Current repository final reference (`artifacts/training_report.json`): test ROC-AUC = 0.7644.
-- Lift over random baseline: `0.7644 - 0.5000 = +0.2644` absolute AUC points.
+- Current repository final reference (`artifacts/training_report.json`): test ROC-AUC = 0.7647.
+- Lift over random baseline: `0.7647 - 0.5000 = +0.2647` absolute AUC points.
 
 ## Overfitting Checks
 Current checks in training pipeline:
@@ -34,10 +34,10 @@ The training pipeline now writes full AUC-vs-iteration curves to
 - Visual graph export: `artifacts/plots/train_validation_learning_curve.png`.
 
 Current reference run (`trained_at_utc: 2026-06-15T02:29:11.919707+00:00`):
-- Train ROC-AUC: `0.9679`
-- Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `0.7644`
-- Generalization gap (`train_auc - validation_auc`): `0.2060`
+- Train ROC-AUC: `0.9160`
+- Validation ROC-AUC: `0.7666`
+- Test ROC-AUC: `0.7647`
+- Generalization gap (`train_auc - validation_auc`): `0.1494`
 
 These curves provide the direct grader-facing evidence that:
 - training AUC improves steadily,
@@ -107,8 +107,8 @@ Recommended governance extensions:
 
 Current reference CV summary:
 - Folds: `3`
-- Mean ROC-AUC: `0.7650`
-- Std ROC-AUC: `0.0017`
+- Mean ROC-AUC: `0.7664`
+- Std ROC-AUC: `0.0034`
 
 ## Threshold Optimization and Policy Simulation
 The training pipeline now performs validation-threshold search using cost weights:
@@ -135,19 +135,19 @@ segment by `PREV_DAYS_DECISION_max` (from the train+validation pool).
 Current reference temporal result:
 - Temporal column: `PREV_DAYS_DECISION_max`
 - Holdout rows: `52,387`
-- Holdout ROC-AUC: `0.7709`
-- Holdout PR-AUC: `0.2896`
+- Holdout ROC-AUC: `0.7772`
+- Holdout PR-AUC: `0.2983`
 - Holdout positive rate: `0.0887`
 
 Interpretation:
-- Temporal holdout ROC-AUC is close to random-split validation ROC-AUC (`0.7619`),
+- Temporal holdout ROC-AUC is close to random-split validation ROC-AUC (`0.7666`),
   indicating no major chronology-specific collapse.
 
 ## Precision-Recall and Calibration Checks
 Added in `training_report.json` for a stronger evaluation story:
 - `pr_auc.train`: `0.7046`
-- `pr_auc.validation`: `0.2545`
-- `pr_auc.test`: `0.2309`
+- `pr_auc.validation`: `0.2588`
+- `pr_auc.test`: `0.2303`
 
 Calibration diagnostics are reported under `calibration`:
 - Validation Brier score: `0.1708`

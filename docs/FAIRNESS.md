@@ -6,8 +6,8 @@ This report reviews subgroup behavior for the Home Credit default-risk model. Th
 
 ## Model Context
 
-- Validation ROC-AUC: `0.7619`
-- Test ROC-AUC: `0.7644`
+- Validation ROC-AUC: `0.7666`
+- Test ROC-AUC: `0.7647`
 - Decision threshold used: `0.549`
 
 ## Gender Subgroup Snapshot

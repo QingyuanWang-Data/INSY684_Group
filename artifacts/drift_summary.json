@@ -1,8 +1,8 @@
 {
   "score_distribution": {
-    "train_vs_validation_psi": 0.0139163408055446,
+    "train_vs_validation_psi": 0.0026618620249715804,
     "train_vs_validation_severity": "stable",
-    "train_vs_test_psi": 0.012281962257563723,
+    "train_vs_test_psi": 0.0030029542608472795,
     "train_vs_test_severity": "stable"
   },
   "feature_distribution": {
