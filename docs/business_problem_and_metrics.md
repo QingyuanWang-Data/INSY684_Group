@@ -135,15 +135,3 @@ These results should be presented carefully. The Course 2 run is not only a mode
 comparison against the Course 1 reference result. It also adds production-oriented capabilities
 such as experiment tracking, hyperparameter tuning, monitoring, fairness review, Docker, CI, and
 deployment documentation.
-
-## Business Lead Contribution
-
-The business lead should ensure the final project answers these questions clearly:
-
-1. What business problem does the model solve?
-2. Who will use the model output?
-3. How does the score become a lending decision?
-4. Which metrics define success?
-5. What are the risks of using the model?
-6. How should fairness, explainability, and monitoring be handled?
-7. What should be improved before the model is used in a real lending process?
