@@ -55,9 +55,10 @@ for final reporting and presentation.
 
 The latest technical branch also improves model generalization by adding categorical aggregate
 features. The current integrated evidence reports validation ROC-AUC `0.7666`, test ROC-AUC
-`0.7647`, train ROC-AUC `0.9160`, and about `700` model columns. This is a better production
-story than focusing only on the older score, because the train/test gap is smaller and the
-project now has stronger tracking, monitoring, and governance evidence.
+`0.7647`, train ROC-AUC `0.9160`, `700` training-frame columns including ID and target fields,
+and `698` model features. This is a better production story than focusing only on the older
+score, because the train/test gap is smaller and the project now has stronger tracking,
+monitoring, and governance evidence.
 
 An additional `Extend` branch explores PCA/clustering features and model comparisons. Its best
 reported test ROC-AUC is `0.7692`, but the clustering-only feature set is weak. Treat this as
