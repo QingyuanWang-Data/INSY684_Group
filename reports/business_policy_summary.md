@@ -68,12 +68,3 @@ Use the model as a credit-risk decision-support system rather than a fully autom
 1. Low-risk band: consider auto-approval or standard terms.
 2. Medium-risk band: route to manual review.
 3. High-risk band: consider decline, lower credit limit, stricter pricing, or additional documentation.
-
-## Branch Evidence Notes
-
-- `code` is the current technical integration branch and contains the final-evaluation evidence used above.
-- `data` contains the data processing and profiling work.
-- `Extend` contains supplementary clustering and model-comparison experiments. Its best listed test ROC-AUC is `0.7692` for selected original features with LightGBM focal loss, while clustering-only features perform weakly. This is useful as extra experimentation evidence, but the main business report should continue to anchor on the integrated `code` branch unless the team explicitly merges the extension work.
-- `business` contains the business lead documentation and policy interpretation.
-
-Before final submission, this report should be checked against the final `main` branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.
