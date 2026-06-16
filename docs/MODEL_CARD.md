@@ -7,7 +7,8 @@ This model estimates payment-difficulty risk for Home Credit loan applicants. It
 ## Data
 
 - Rows: `50000`
-- Columns: `700`
+- Training frame columns: `700` including `SK_ID_CURR` and `TARGET`
+- Model feature count: `698`
 - Positive class rate: `0.0805`
 - Negative class rate: `0.9195`
 

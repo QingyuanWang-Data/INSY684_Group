@@ -33,7 +33,7 @@ The training pipeline now writes full AUC-vs-iteration curves to
 - A grader-friendly table export is also generated at `artifacts/learning_curves.csv`.
 - Visual graph export: `artifacts/plots/train_validation_learning_curve.png`.
 
-Current reference run (`trained_at_utc: 2026-06-15T02:29:11.919707+00:00`):
+Current reference run (`trained_at_utc: 2026-06-15T23:29:46.237108+00:00`):
 - Train ROC-AUC: `0.9160`
 - Validation ROC-AUC: `0.7666`
 - Test ROC-AUC: `0.7647`
@@ -59,36 +59,36 @@ Validation matrix at `threshold_used` from `training_report.json`
 
 |  | Pred 0 | Pred 1 |
 | --- | ---: | ---: |
-| True 0 | 8,435 | 760 |
-| True 1 | 514 | 291 |
+| True 0 | 8,197 | 998 |
+| True 1 | 465 | 340 |
 
 Validation normalized matrix:
 
 |  | Pred 0 | Pred 1 |
 | --- | ---: | ---: |
-| True 0 | 0.9173 | 0.0827 |
-| True 1 | 0.6385 | 0.3615 |
+| True 0 | 0.8915 | 0.1085 |
+| True 1 | 0.5776 | 0.4224 |
 
 Validation rates from the same matrix:
-- Accuracy: `0.8726`
-- Precision: `0.2769`
-- Recall (TPR): `0.3615`
-- Specificity (TNR): `0.9173`
-- FPR: `0.0827`
-- FNR: `0.6385`
+- Accuracy: `0.8537`
+- Precision: `0.2541`
+- Recall (TPR): `0.4224`
+- Specificity (TNR): `0.8915`
+- FPR: `0.1085`
+- FNR: `0.5776`
 
 Test matrix at the same threshold:
 
 |  | Pred 0 | Pred 1 |
 | --- | ---: | ---: |
-| True 0 | 4,202 | 396 |
-| True 1 | 255 | 147 |
+| True 0 | 4,109 | 489 |
+| True 1 | 233 | 169 |
 
 Test rates:
-- Accuracy: `0.8698`
-- Precision: `0.2707`
-- Recall (TPR): `0.3657`
-- Specificity (TNR): `0.9139`
+- Accuracy: `0.8556`
+- Precision: `0.2568`
+- Recall (TPR): `0.4204`
+- Specificity (TNR): `0.8936`
 
 ## Cross-Validation
 The training pipeline now includes stratified K-fold cross-validation on the
@@ -125,8 +125,8 @@ This ties model evaluation to business decisions instead of relying on a fixed
 Current threshold-policy result:
 - Default threshold: `0.500`
 - Selected threshold: `0.549`
-- Validation expected cost per applicant at default threshold: `0.3466`
-- Validation expected cost per applicant at selected threshold: `0.3216`
+- Validation expected cost per applicant at default threshold: `0.3613`
+- Validation expected cost per applicant at selected threshold: `0.3323`
 
 ## Temporal Holdout (Out-of-Time) Validation
 The pipeline now runs a separate temporal holdout diagnostic using the most recent
@@ -134,10 +134,10 @@ segment by `PREV_DAYS_DECISION_max` (from the train+validation pool).
 
 Current reference temporal result:
 - Temporal column: `PREV_DAYS_DECISION_max`
-- Holdout rows: `52,387`
+- Holdout rows: `8,519`
 - Holdout ROC-AUC: `0.7772`
 - Holdout PR-AUC: `0.2983`
-- Holdout positive rate: `0.0887`
+- Holdout positive rate: `0.0904`
 
 Interpretation:
 - Temporal holdout ROC-AUC is close to random-split validation ROC-AUC (`0.7666`),
@@ -145,15 +145,15 @@ Interpretation:
 
 ## Precision-Recall and Calibration Checks
 Added in `training_report.json` for a stronger evaluation story:
-- `pr_auc.train`: `0.7046`
+- `pr_auc.train`: `0.4942`
 - `pr_auc.validation`: `0.2588`
 - `pr_auc.test`: `0.2303`
 
 Calibration diagnostics are reported under `calibration`:
-- Validation Brier score: `0.1708`
-- Validation expected calibration error (10 bins): `0.3173`
-- Test Brier score: `0.1718`
-- Test expected calibration error (10 bins): `0.3188`
+- Validation Brier score: `0.1883`
+- Validation expected calibration error (10 bins): `0.3448`
+- Test Brier score: `0.1898`
+- Test expected calibration error (10 bins): `0.3466`
 - Bin tables exported to:
   - `artifacts/train_calibration.csv`
   - `artifacts/validation_calibration.csv`
@@ -182,8 +182,8 @@ The pipeline now writes subgroup diagnostics to:
 - `artifacts/test_subgroup_metrics.csv`
 
 Current snapshot highlights (`CODE_GENDER` recall at threshold `0.549`):
-- Validation: `F=0.4114`, `M=0.5250`
-- Test: `F=0.4113`, `M=0.5384`
+- Validation: `F=0.3790`, `M=0.4822`
+- Test: `F=0.4074`, `M=0.4381`
 
 This gives the grader explicit evidence that we are checking group-level behavior,
 not only aggregate AUC.
@@ -192,8 +192,8 @@ not only aggregate AUC.
 The pipeline now writes PSI-based drift diagnostics to `artifacts/drift_summary.json`.
 
 Current snapshot:
-- Score PSI train vs validation: `0.00130` (`stable`)
-- Score PSI train vs test: `0.01228` (`stable`)
+- Score PSI train vs validation: `0.00266` (`stable`)
+- Score PSI train vs test: `0.00300` (`stable`)
 - Max feature PSI train vs validation (tracked features): `0.00183`
 
 These values are far below common alert thresholds (e.g., `0.1`), so this run

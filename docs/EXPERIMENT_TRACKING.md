@@ -52,7 +52,8 @@ Sampled MLflow training run:
 - Portable evidence: committed `artifacts/training_report.json`, plots, and
   governance reports; local MLflow run IDs remain machine-specific.
 - Sample size: `50,000` application rows
-- Feature count: `450`
+- Training frame columns: `700` including `SK_ID_CURR` and `TARGET`
+- Model feature count: `698`
 - Train / validation / test split rows: `35,000 / 10,000 / 5,000`
 - Validation ROC-AUC: `0.7666`
 - Test ROC-AUC: `0.7647`
