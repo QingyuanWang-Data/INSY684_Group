@@ -764,6 +764,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cluster-n-min", type=int, default=2)
     parser.add_argument("--cluster-n-max", type=int, default=10)
     parser.add_argument(
+        "--kmeans-clusters",
+        type=int,
+        default=None,
+        help="Run KMeans with a fixed cluster count instead of scanning --cluster-n-min to --cluster-n-max.",
+    )
+    parser.add_argument(
+        "--gmm-components",
+        type=int,
+        default=None,
+        help="Run Gaussian Mixture with a fixed component count instead of scanning --cluster-n-min to --cluster-n-max.",
+    )
+    parser.add_argument(
         "--gmm-covariance-type",
         choices=["full", "tied", "diag", "spherical"],
         default="diag",
@@ -781,10 +793,19 @@ def main() -> None:
         format="%(asctime)s %(levelname)s %(name)s - %(message)s",
     )
     args = parse_args()
+    kmeans_n_min = args.kmeans_clusters if args.kmeans_clusters is not None else args.cluster_n_min
+    kmeans_n_max = args.kmeans_clusters if args.kmeans_clusters is not None else args.cluster_n_max
+    gmm_n_min = args.gmm_components if args.gmm_components is not None else args.cluster_n_min
+    gmm_n_max = args.gmm_components if args.gmm_components is not None else args.cluster_n_max
+
     if args.cluster_n_min < 2:
         raise ValueError("--cluster-n-min must be >= 2.")
     if args.cluster_n_max < args.cluster_n_min:
         raise ValueError("--cluster-n-max must be >= --cluster-n-min.")
+    if kmeans_n_min < 2:
+        raise ValueError("--kmeans-clusters must be >= 2.")
+    if gmm_n_min < 2:
+        raise ValueError("--gmm-components must be >= 2.")
     if args.hdbscan_min_cluster_size < 2:
         raise ValueError("--hdbscan-min-cluster-size must be >= 2.")
 
@@ -803,8 +824,8 @@ def main() -> None:
     results = {
         "kmeans": run_kmeans_scan(
             prepared.matrix,
-            args.cluster_n_min,
-            args.cluster_n_max,
+            kmeans_n_min,
+            kmeans_n_max,
             args.random_state,
             args.silhouette_sample_size,
         ),
@@ -817,8 +838,8 @@ def main() -> None:
         ),
         "gaussian_mixture": run_gaussian_mixture_scan(
             prepared.matrix,
-            args.cluster_n_min,
-            args.cluster_n_max,
+            gmm_n_min,
+            gmm_n_max,
             args.gmm_covariance_type,
             args.random_state,
             args.silhouette_sample_size,
