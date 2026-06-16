@@ -13,10 +13,10 @@ from pathlib import Path
 
 
 DEFAULT_BASELINE_AUC = 0.7858
-DEFAULT_CURRENT_AUC = 0.7619
-DEFAULT_TEST_AUC = 0.7644
+DEFAULT_CURRENT_AUC = 0.7666
+DEFAULT_TEST_AUC = 0.7647
 DEFAULT_TUNED_AUC = 0.7679
-DEFAULT_TEST_PR_AUC = 0.2309
+DEFAULT_TEST_PR_AUC = 0.2303
 DEFAULT_THRESHOLD = 0.549
 
 
@@ -71,11 +71,11 @@ def build_report(artifact_dir: Path) -> str:
     tuning_rows = read_csv_rows(artifact_dir / "tuning_trials.csv")
 
     policy_row = find_threshold_row(cost_rows, DEFAULT_THRESHOLD)
-    approval_rate = as_float(policy_row or {}, "approval_rate", 0.8949)
-    approved_default_rate = as_float(policy_row or {}, "default_rate_within_approved", 0.0574)
-    expected_cost = as_float(policy_row or {}, "expected_cost_per_applicant", 0.3330)
-    recall = as_float(policy_row or {}, "recall", 0.3615)
-    specificity = as_float(policy_row or {}, "specificity", 0.9173)
+    approval_rate = as_float(policy_row or {}, "approval_rate", 0.8662)
+    approved_default_rate = as_float(policy_row or {}, "default_rate_within_approved", 0.0537)
+    expected_cost = as_float(policy_row or {}, "expected_cost_per_applicant", 0.3323)
+    recall = as_float(policy_row or {}, "recall", 0.4224)
+    specificity = as_float(policy_row or {}, "specificity", 0.8915)
     tuned_auc = best_tuning_auc(tuning_rows)
 
     gender_gap = largest_gap(subgroup_rows, "CODE_GENDER", "recall")
@@ -93,7 +93,7 @@ def build_report(artifact_dir: Path) -> str:
         "| Item | Current evidence |",
         "| --- | ---: |",
         f"| Course 1 reference test ROC-AUC | `{DEFAULT_BASELINE_AUC:.4f}` |",
-        f"| Course 2 sampled MLflow validation ROC-AUC | `{DEFAULT_CURRENT_AUC:.4f}` |",
+        f"| Course 2 final validation ROC-AUC | `{DEFAULT_CURRENT_AUC:.4f}` |",
         f"| Course 2 final test ROC-AUC | `{DEFAULT_TEST_AUC:.4f}` |",
         f"| Course 2 Optuna best validation ROC-AUC | `{tuned_auc:.4f}` |",
         f"| Course 2 test PR-AUC | `{DEFAULT_TEST_PR_AUC:.4f}` |",
@@ -145,7 +145,7 @@ def build_report(artifact_dir: Path) -> str:
             "2. Medium-risk band: route to manual review.",
             "3. High-risk band: consider decline, lower credit limit, stricter pricing, or additional documentation.",
             "",
-            "Before final submission, the business section should be updated with the final branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.",
+        "Before final submission, the business section should be checked against the final main branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.",
             "",
         ]
     )

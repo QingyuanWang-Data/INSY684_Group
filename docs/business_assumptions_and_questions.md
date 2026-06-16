@@ -41,12 +41,12 @@ confirmed again before final merge to `main`.
 | Question | Current answer / next step |
 | --- | --- |
 | Which model will be treated as the Course 2 main model? | Initial sampled LightGBM/focal-loss run exists; confirm final model before merging to `main`. |
-| What is the new validation and test ROC-AUC? | Current sampled validation ROC-AUC is `0.7619`; final held-out test ROC-AUC is `0.7644`. |
-| Is PR-AUC being reported because the default class is rare? | Yes, current sampled validation PR-AUC is `0.2545`. |
+| What is the new validation and test ROC-AUC? | Current final validation ROC-AUC is `0.7666`; final held-out test ROC-AUC is `0.7647`. |
+| Is PR-AUC being reported because the default class is rare? | Yes, current validation PR-AUC is `0.2588` and test PR-AUC is `0.2303`. |
 | What threshold or risk band cutoffs are being used? | Current selected threshold is `0.549`; final risk-band cutoffs still need agreement. |
 | What are the confusion matrix results at the selected threshold? | Validation matrix: true 0 predicted 0/1 = `8435/760`; true 1 predicted 0/1 = `514/291`. |
-| What approval rate does the selected policy imply? | Current validation approval rate is `89.49%`. |
-| What is the estimated default rate among approved applicants? | Current approved default rate is `5.74%`. |
+| What approval rate does the selected policy imply? | Current validation approval rate is `86.62%`. |
+| What is the estimated default rate among approved applicants? | Current approved default rate is `5.37%`. |
 | Are MLflow or other tracking tools recording parameters, metrics, and artifacts? | MLflow hooks and sampled run evidence are documented; final run evidence should be captured for slides. |
 | Which subgroup metrics are available for fairness review? | Gender, income type, contract type, education, and family status subgroup metrics are available. |
 | Are there drift monitoring outputs? | Score and feature PSI monitoring outputs are available in the technical branch. |
@@ -71,7 +71,7 @@ This document should be updated after the team finalizes the `main` branch versi
 
 Expected updates:
 
-- Confirm the final `main` branch uses the same model evidence: validation ROC-AUC `0.7619`, test ROC-AUC `0.7644`, and test PR-AUC `0.2309`.
+- Confirm the final `main` branch uses the same model evidence: validation ROC-AUC `0.7666`, test ROC-AUC `0.7647`, and test PR-AUC `0.2303`.
 - Add any updated final Course 2 model metrics if the team reruns training before submission.
 - Add the selected threshold or risk band cutoffs.
 - Add business interpretation of confusion matrix results.

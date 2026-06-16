@@ -53,6 +53,17 @@ branch. Current evidence includes:
 The business work should now shift from only planning the upgrade to interpreting these outputs
 for final reporting and presentation.
 
+The latest technical branch also improves model generalization by adding categorical aggregate
+features. The current integrated evidence reports validation ROC-AUC `0.7666`, test ROC-AUC
+`0.7647`, train ROC-AUC `0.9160`, and about `700` model columns. This is a better production
+story than focusing only on the older score, because the train/test gap is smaller and the
+project now has stronger tracking, monitoring, and governance evidence.
+
+An additional `Extend` branch explores PCA/clustering features and model comparisons. Its best
+reported test ROC-AUC is `0.7692`, but the clustering-only feature set is weak. Treat this as
+supplementary experimentation unless the team decides to integrate it into the final `main`
+branch.
+
 ## Course 2 Improvement Goals
 
 Course 2 should not only aim for a better model score. It should improve how the model is built,

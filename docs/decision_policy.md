@@ -67,18 +67,18 @@ This tradeoff should be evaluated using both machine learning metrics and busine
 The current technical branch uses threshold `0.549` for validation policy evidence. At this
 threshold:
 
-- Final test ROC-AUC: `0.7644`.
-- Test PR-AUC: `0.2309`.
-- Approval rate: `89.49%`.
-- Approved default rate: `5.74%`.
-- Recall for payment-difficulty applicants: `36.15%`.
-- Specificity for normal-repayment applicants: `91.73%`.
-- Expected validation cost per applicant: `0.3330`.
+- Final test ROC-AUC: `0.7647`.
+- Test PR-AUC: `0.2303`.
+- Approval rate: `86.62%`.
+- Approved default rate: `5.37%`.
+- Recall for payment-difficulty applicants: `42.24%`.
+- Specificity for normal-repayment applicants: `89.15%`.
+- Expected validation cost per applicant: `0.3323`.
 
 The cost-sensitivity evidence shows that when false negatives become more expensive, the
 selected threshold moves lower. This catches more risky applicants but reduces approval volume.
-For example, a false-negative cost of `15.0` selects threshold `0.4020`, with approval rate
-`54.48%` and recall `79.88%`. This is much more risk-control oriented than the current
+For example, a false-negative cost of `15.0` selects threshold `0.4314`, with approval rate
+`54.77%` and recall `81.49%`. This is much more risk-control oriented than the current
 threshold `0.549`.
 
 ## Metrics for Policy Evaluation
