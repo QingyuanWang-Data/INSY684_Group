@@ -11,3 +11,6 @@ uv run python -m homecredit_service.model_with_clusting `
   --kmeans-clusters 2 `
   --gmm-components 5 `
   --hdbscan-min-cluster-size 50
+run dashborad
+uv add streamlit
+uv run streamlit run src/homecredit_service/monitoring_dashboard.py
