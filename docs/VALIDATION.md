@@ -183,7 +183,7 @@ The pipeline now writes subgroup diagnostics to:
 
 Current snapshot highlights (`CODE_GENDER` recall at threshold `0.549`):
 - Validation: `F=0.3790`, `M=0.4822`
-- Test: `F=0.4074`, `M=0.4381`
+- Test: `F=0.3924`, `M=0.4606`
 
 This gives the grader explicit evidence that we are checking group-level behavior,
 not only aggregate AUC.
