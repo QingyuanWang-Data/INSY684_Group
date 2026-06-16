@@ -31,8 +31,3 @@ This report estimates expected credit loss under simple planning scenarios. It s
 - The current validation threshold has a much higher approval rate (`86.62%`) than the Course 1 planning baseline (`60.00%`). Because more applicants are approved, total expected loss can increase even when the approved default rate is lower.
 - This is why the model score should be paired with a business approval policy. A lower default rate is valuable, but approval volume, manual review capacity, and risk appetite determine the final business impact.
 - These estimates should be updated if the team changes threshold, average loan amount, approval policy, or loss-given-default assumptions.
-
-## Recommendation
-
-Use this simulation to frame business tradeoffs in the final presentation. Avoid claiming realized savings. A careful wording is: under planning assumptions, the model-supported policy can reduce expected loss at the same approval volume, but final business value depends on the approval policy chosen by the lender.
-
