@@ -1,0 +1,175 @@
+{
+  "generated_at_utc": "2026-06-15T20:09:24.244735+00:00",
+  "metadata": {
+    "sample_size": 5000,
+    "random_state": 42,
+    "source": "build_training_frame"
+  },
+  "rows": 5000,
+  "input_feature_count": 450,
+  "categorical_feature_count": 16,
+  "numeric_feature_count": 434,
+  "preprocessing": {
+    "imputer": "median",
+    "scaler": "standard",
+    "pca_requested_components": 2,
+    "pca_effective_components": 2,
+    "pca_explained_variance_ratio_sum": 0.1444767415523529,
+    "pca_n_closest_or_reaching_90pct": 123
+  },
+  "best_method_by_silhouette": "kmeans",
+  "silhouette_scores": {
+    "kmeans": 0.6539679765701294,
+    "hdbscan": 0.5612582564353943,
+    "gaussian_mixture": 0.4907607436180115
+  },
+  "cluster_interpretations": [
+    {
+      "method": "gaussian_mixture",
+      "cluster": "0",
+      "meaning": "lower CC_CNT_DRAWINGS_ATM_CURRENT_max; lower CC_AMT_BALANCE_max; lower CC_AMT_TOTAL_RECEIVABLE_max; lower CC_AMT_RECIVABLE_max"
+    },
+    {
+      "method": "gaussian_mixture",
+      "cluster": "1",
+      "meaning": "higher INST_COUNT; higher INST_AMT_INSTALMENT_sum; higher INST_AMT_PAYMENT_sum; higher PREV_AMT_CREDIT_max"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "-1",
+      "meaning": "higher PREV_DAYS_LAST_DUE_1ST_VERSION_max; higher PREV_DAYS_LAST_DUE_1ST_VERSION_sum; lower INST_NUM_INSTALMENT_VERSION_min; higher PREV_DAYS_LAST_DUE_1ST_VERSION_mean"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "0",
+      "meaning": "higher CC_AMT_CREDIT_LIMIT_ACTUAL_min; higher CC_AMT_CREDIT_LIMIT_ACTUAL_mean; lower CC_CNT_DRAWINGS_ATM_CURRENT_max; higher CC_AMT_CREDIT_LIMIT_ACTUAL_max"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "1",
+      "meaning": "higher CC_SK_DPD_max; higher CC_SK_DPD_std; higher CC_SK_DPD_sum; higher CC_SK_DPD_mean"
+    },
+    {
+      "method": "kmeans",
+      "cluster": "0",
+      "meaning": "lower CC_AMT_TOTAL_RECEIVABLE_max; lower CC_AMT_RECIVABLE_max; lower CC_AMT_BALANCE_max; lower CC_AMT_RECEIVABLE_PRINCIPAL_max"
+    },
+    {
+      "method": "kmeans",
+      "cluster": "1",
+      "meaning": "lower INST_NUM_INSTALMENT_VERSION_min; lower PREV_DAYS_FIRST_DRAWING_min; higher INST_COUNT; higher PREV_DAYS_FIRST_DRAWING_std"
+    }
+  ],
+  "methods": {
+    "kmeans": {
+      "parameters": {
+        "n_clusters": 2,
+        "selection_metric": "silhouette",
+        "searched_n_min": 2,
+        "searched_n_max": 10
+      },
+      "metrics": {
+        "cluster_count": 2,
+        "noise_count": 0,
+        "noise_rate": 0.0,
+        "silhouette": 0.6539679765701294,
+        "calinski_harabasz": 3750.850199203111,
+        "davies_bouldin": 0.7990702784217194,
+        "inertia": 180753.71875
+      },
+      "cluster_sizes": [
+        {
+          "cluster": 0,
+          "count": 4484,
+          "share": 0.8968,
+          "target_rate": 0.08140053523639608
+        },
+        {
+          "cluster": 1,
+          "count": 516,
+          "share": 0.1032,
+          "target_rate": 0.09108527131782945
+        }
+      ]
+    },
+    "hdbscan": {
+      "parameters": {
+        "min_cluster_size": 50,
+        "min_samples": null
+      },
+      "metrics": {
+        "cluster_count": 2,
+        "noise_count": 1970,
+        "noise_rate": 0.394,
+        "silhouette": 0.5612582564353943,
+        "calinski_harabasz": 565.4348350606073,
+        "davies_bouldin": 0.3240175850606144
+      },
+      "cluster_sizes": [
+        {
+          "cluster": -1,
+          "count": 1970,
+          "share": 0.394,
+          "target_rate": 0.07766497461928934
+        },
+        {
+          "cluster": 0,
+          "count": 2971,
+          "share": 0.5942,
+          "target_rate": 0.0844833389431168
+        },
+        {
+          "cluster": 1,
+          "count": 59,
+          "share": 0.0118,
+          "target_rate": 0.13559322033898305
+        }
+      ]
+    },
+    "gaussian_mixture": {
+      "parameters": {
+        "n_components": 2,
+        "covariance_type": "diag",
+        "selection_metric": "silhouette",
+        "searched_n_min": 2,
+        "searched_n_max": 10
+      },
+      "metrics": {
+        "cluster_count": 2,
+        "noise_count": 0,
+        "noise_rate": 0.0,
+        "silhouette": 0.4907607436180115,
+        "calinski_harabasz": 2773.1138040217265,
+        "davies_bouldin": 1.057988119679843,
+        "bic": 54731.024092970794,
+        "aic": 54672.36935424805
+      },
+      "cluster_sizes": [
+        {
+          "cluster": 0,
+          "count": 3215,
+          "share": 0.643,
+          "target_rate": 0.08304821150855365
+        },
+        {
+          "cluster": 1,
+          "count": 1785,
+          "share": 0.357,
+          "target_rate": 0.08123249299719888
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "labels": "artifacts\\clustering\\cluster_labels.csv",
+    "profiles": "artifacts\\clustering\\cluster_profiles.csv",
+    "pca_diagnostics": "artifacts\\clustering\\pca_diagnostics.csv",
+    "plots": {
+      "pca_information_lost": "artifacts\\clustering\\plots\\pca_information_lost.png",
+      "kmeans_pca_scatter": "artifacts\\clustering\\plots\\kmeans_pca_scatter.png",
+      "hdbscan_pca_scatter": "artifacts\\clustering\\plots\\hdbscan_pca_scatter.png",
+      "gaussian_mixture_pca_scatter": "artifacts\\clustering\\plots\\gaussian_mixture_pca_scatter.png"
+    },
+    "markdown_report": "artifacts\\clustering\\clustering_report.md"
+  }
+}
