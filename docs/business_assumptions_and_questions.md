@@ -44,7 +44,7 @@ confirmed again before final merge to `main`.
 | What is the new validation and test ROC-AUC? | Current final validation ROC-AUC is `0.7666`; final held-out test ROC-AUC is `0.7647`. |
 | Is PR-AUC being reported because the default class is rare? | Yes, current validation PR-AUC is `0.2588` and test PR-AUC is `0.2303`. |
 | What threshold or risk band cutoffs are being used? | Current selected threshold is `0.549`; final risk-band cutoffs still need agreement. |
-| What are the confusion matrix results at the selected threshold? | Validation matrix: true 0 predicted 0/1 = `8435/760`; true 1 predicted 0/1 = `514/291`. |
+| What are the confusion matrix results at the selected threshold? | Validation matrix: true 0 predicted 0/1 = `8197/998`; true 1 predicted 0/1 = `465/340`. Test matrix: true 0 predicted 0/1 = `4109/489`; true 1 predicted 0/1 = `233/169`. |
 | What approval rate does the selected policy imply? | Current validation approval rate is `86.62%`. |
 | What is the estimated default rate among approved applicants? | Current approved default rate is `5.37%`. |
 | Are MLflow or other tracking tools recording parameters, metrics, and artifacts? | MLflow hooks and sampled run evidence are documented; final run evidence should be captured for slides. |
@@ -65,16 +65,30 @@ The business lead should continue refining:
 6. What limitations should be communicated clearly to stakeholders?
 7. What would be required before real-world deployment?
 
-## Items to Update Later
+## Final Main-Branch Review Checklist
 
-This document should be updated after the team finalizes the `main` branch version.
+Most of the business content is now drafted. The remaining work is mainly a final consistency
+check after the team merges the technical and business branches into `main`.
 
-Expected updates:
+Expected final checks:
 
 - Confirm the final `main` branch uses the same model evidence: validation ROC-AUC `0.7666`, test ROC-AUC `0.7647`, and test PR-AUC `0.2303`.
 - Add any updated final Course 2 model metrics if the team reruns training before submission.
-- Add the selected threshold or risk band cutoffs.
-- Add business interpretation of confusion matrix results.
-- Add fairness findings from subgroup analysis.
-- Add monitoring recommendations based on drift outputs.
-- Add final deployment and demo notes.
+- Confirm the selected threshold remains `0.549`. If the threshold changes, update approval rate, approved default rate, recall, specificity, expected cost, and business impact scenarios.
+- Confirm the business recommendation still uses a three-band policy: low risk for auto-approval or standard terms, medium risk for manual review, and high risk for decline, stricter terms, lower credit limit, or additional documentation.
+- Confirm confusion matrix interpretation is consistent with the final report. At the current threshold, validation recall is `42.24%`, so the model catches some risky applicants but still misses a meaningful share. This supports using the model as decision support instead of a fully automated denial tool.
+- Confirm fairness findings are still consistent with the final subgroup report. The current evidence shows recall gaps across gender, income type, education, and family status. These gaps should be presented as governance risks that require monitoring, not as proof that the model is unusable.
+- Confirm monitoring recommendations are aligned with the final drift outputs. Current score and feature PSI values are stable, but the team should still monitor score drift, feature drift, calibration, approval rate, approved default rate, and subgroup metrics after retraining or threshold changes.
+- Confirm deployment and demo notes match the final technical branch. The current technical story is FastAPI serving, `/health` for process status, `/ready` for model artifact readiness, Docker runtime, and a future cloud-native deployment option.
+- Confirm the final `main` branch does not contain conflicting metrics across documents. In particular, use `700` training-frame columns including `SK_ID_CURR` and `TARGET`, and `698` model features.
+- Confirm `docs/SUBMISSION_INFO.md` includes the final team name, member GitHub IDs, and contribution descriptions before LMS submission.
+
+## Business Presentation Notes
+
+The final business narrative should emphasize:
+
+1. The model can rank default risk meaningfully better than random, with final test ROC-AUC `0.7647`.
+2. The model should support lending decisions, not replace human judgment.
+3. Threshold selection is a business policy choice. Lower thresholds capture more risky applicants but reduce approval volume; higher thresholds protect growth but may allow more risky applicants through.
+4. Business value depends on the approval policy. At the same approval volume, reducing approved default rate from `6.00%` to `5.37%` can lower expected loss in the planning scenario. But if approval volume increases sharply, total expected loss can rise even with a lower default rate.
+5. Fairness and monitoring are part of the product, not optional add-ons. Subgroup gaps, drift, and calibration should be reviewed before any real lending deployment.
