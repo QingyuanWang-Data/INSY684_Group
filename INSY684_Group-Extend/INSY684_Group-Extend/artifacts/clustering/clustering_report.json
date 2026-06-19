@@ -1,0 +1,274 @@
+{
+  "generated_at_utc": "2026-06-16T21:12:32.365036+00:00",
+  "metadata": {
+    "sample_size": 50000,
+    "random_state": 42,
+    "source": "build_training_frame"
+  },
+  "rows": 50000,
+  "input_feature_count": 698,
+  "categorical_feature_count": 16,
+  "numeric_feature_count": 682,
+  "preprocessing": {
+    "imputer": "median",
+    "scaler": "standard",
+    "pca_requested_components": 2,
+    "pca_effective_components": 2,
+    "pca_explained_variance_ratio_sum": 0.12106336653232574,
+    "pca_n_closest_or_reaching_90pct": 215
+  },
+  "best_method_by_silhouette": "kmeans",
+  "silhouette_scores": {
+    "kmeans": 0.5210229158401489,
+    "hdbscan": 0.1976773887872696,
+    "gaussian_mixture": 0.3843850791454315
+  },
+  "cluster_interpretations": [
+    {
+      "method": "gaussian_mixture",
+      "cluster": "0",
+      "meaning": "higher PREV_CAT_NAME_CLIENT_TYPE_NEW_SHARE; lower PREV_CAT_NAME_CLIENT_TYPE_REPEATER_SHARE; higher PREV_CAT_NAME_PORTFOLIO_POS_SHARE; lower PREV_CAT_NAME_GOODS_CATEGORY_XNA_SHARE"
+    },
+    {
+      "method": "gaussian_mixture",
+      "cluster": "1",
+      "meaning": "lower CC_CNT_DRAWINGS_ATM_CURRENT_max; lower CC_AMT_BALANCE_max; lower CC_AMT_RECIVABLE_max; lower CC_AMT_TOTAL_RECEIVABLE_max"
+    },
+    {
+      "method": "gaussian_mixture",
+      "cluster": "2",
+      "meaning": "lower CC_AMT_BALANCE_max; lower CC_AMT_TOTAL_RECEIVABLE_max; lower CC_AMT_RECIVABLE_max; lower CC_AMT_RECEIVABLE_PRINCIPAL_max"
+    },
+    {
+      "method": "gaussian_mixture",
+      "cluster": "3",
+      "meaning": "higher INST_AMT_INSTALMENT_sum; higher INST_AMT_PAYMENT_sum; higher PREV_CAT_NAME_GOODS_CATEGORY_XNA_COUNT; higher PREV_CAT_NAME_CLIENT_TYPE_REPEATER_COUNT"
+    },
+    {
+      "method": "gaussian_mixture",
+      "cluster": "4",
+      "meaning": "lower PREV_DAYS_FIRST_DRAWING_mean; lower PREV_DAYS_FIRST_DRAWING_min; lower INST_NUM_INSTALMENT_VERSION_min; higher PREV_DAYS_FIRST_DRAWING_std"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "-1",
+      "meaning": "higher PREV_DAYS_LAST_DUE_1ST_VERSION_max; higher PREV_DAYS_LAST_DUE_1ST_VERSION_sum; lower INST_NUM_INSTALMENT_VERSION_min; lower PREV_DAYS_FIRST_DRAWING_min"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "0",
+      "meaning": "lower INST_NUM_INSTALMENT_VERSION_min; lower PREV_DAYS_FIRST_DRAWING_min; higher INST_COUNT; higher INST_NUM_INSTALMENT_NUMBER_max"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "1",
+      "meaning": "lower INST_NUM_INSTALMENT_VERSION_min; lower PREV_DAYS_FIRST_DRAWING_min; higher PREV_DAYS_FIRST_DRAWING_std; lower PREV_DAYS_FIRST_DRAWING_mean"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "2",
+      "meaning": "lower PREV_DAYS_FIRST_DRAWING_mean; higher PREV_DAYS_LAST_DUE_1ST_VERSION_mean; lower PREV_DAYS_FIRST_DRAWING_min; higher PREV_DAYS_FIRST_DRAWING_std"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "3",
+      "meaning": "higher INST_NUM_INSTALMENT_NUMBER_mean; lower INST_NUM_INSTALMENT_VERSION_min; lower PREV_DAYS_FIRST_DRAWING_min; higher PREV_DAYS_FIRST_DRAWING_std"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "4",
+      "meaning": "higher PREV_CAT_NAME_CASH_LOAN_PURPOSE_XNA_COUNT; higher PREV_CAT_NAME_CONTRACT_TYPE_CASH_LOANS_COUNT; higher PREV_CAT_NAME_PORTFOLIO_CASH_COUNT; higher PREV_CAT_NAME_GOODS_CATEGORY_XNA_COUNT"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "5",
+      "meaning": "higher PREV_DAYS_FIRST_DRAWING_sum; higher POS_COUNT; higher POS_CAT_NAME_CONTRACT_STATUS_ACTIVE_COUNT; higher PREV_CAT_NAME_PORTFOLIO_CASH_COUNT"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "6",
+      "meaning": "lower CC_CNT_DRAWINGS_ATM_CURRENT_max; lower CC_AMT_DRAWINGS_ATM_CURRENT_max; lower CC_AMT_BALANCE_max; lower CC_AMT_RECIVABLE_max"
+    },
+    {
+      "method": "hdbscan",
+      "cluster": "7",
+      "meaning": "higher PREV_CAT_NAME_PRODUCT_TYPE_X_SELL_COUNT; higher PREV_CAT_NAME_PORTFOLIO_CASH_COUNT; higher PREV_AMT_CREDIT_max; higher PREV_AMT_APPLICATION_max"
+    },
+    {
+      "method": "kmeans",
+      "cluster": "0",
+      "meaning": "lower CC_AMT_TOTAL_RECEIVABLE_max; lower CC_AMT_RECIVABLE_max; lower CC_AMT_BALANCE_max; lower CC_AMT_RECEIVABLE_PRINCIPAL_max"
+    },
+    {
+      "method": "kmeans",
+      "cluster": "1",
+      "meaning": "higher PREV_CAT_NAME_GOODS_CATEGORY_XNA_COUNT; higher PREV_CAT_NAME_CLIENT_TYPE_REPEATER_COUNT; higher PREV_COUNT; higher PREV_CAT_NAME_PRODUCT_TYPE_X_SELL_COUNT"
+    }
+  ],
+  "methods": {
+    "kmeans": {
+      "parameters": {
+        "n_clusters": 2,
+        "selection_metric": "silhouette",
+        "searched_n_min": 2,
+        "searched_n_max": 2
+      },
+      "metrics": {
+        "cluster_count": 2,
+        "noise_count": 0,
+        "noise_rate": 0.0,
+        "silhouette": 0.5210229158401489,
+        "calinski_harabasz": 37901.894520574184,
+        "davies_bouldin": 0.947262997831372,
+        "inertia": 2392948.25
+      },
+      "cluster_sizes": [
+        {
+          "cluster": 0,
+          "count": 34552,
+          "share": 0.69104,
+          "target_rate": 0.07741954156054642
+        },
+        {
+          "cluster": 1,
+          "count": 15448,
+          "share": 0.30896,
+          "target_rate": 0.08726048679440704
+        }
+      ]
+    },
+    "hdbscan": {
+      "parameters": {
+        "min_cluster_size": 50,
+        "min_samples": null
+      },
+      "metrics": {
+        "cluster_count": 8,
+        "noise_count": 16818,
+        "noise_rate": 0.33636,
+        "silhouette": 0.1976773887872696,
+        "calinski_harabasz": 528.8057294305087,
+        "davies_bouldin": 0.5123743902570717
+      },
+      "cluster_sizes": [
+        {
+          "cluster": -1,
+          "count": 16818,
+          "share": 0.33636,
+          "target_rate": 0.08752527054346533
+        },
+        {
+          "cluster": 0,
+          "count": 86,
+          "share": 0.00172,
+          "target_rate": 0.12790697674418605
+        },
+        {
+          "cluster": 1,
+          "count": 175,
+          "share": 0.0035,
+          "target_rate": 0.06285714285714286
+        },
+        {
+          "cluster": 2,
+          "count": 87,
+          "share": 0.00174,
+          "target_rate": 0.11494252873563218
+        },
+        {
+          "cluster": 3,
+          "count": 69,
+          "share": 0.00138,
+          "target_rate": 0.043478260869565216
+        },
+        {
+          "cluster": 4,
+          "count": 61,
+          "share": 0.00122,
+          "target_rate": 0.08196721311475409
+        },
+        {
+          "cluster": 5,
+          "count": 51,
+          "share": 0.00102,
+          "target_rate": 0.09803921568627451
+        },
+        {
+          "cluster": 6,
+          "count": 32570,
+          "share": 0.6514,
+          "target_rate": 0.07675775253300583
+        },
+        {
+          "cluster": 7,
+          "count": 83,
+          "share": 0.00166,
+          "target_rate": 0.07228915662650602
+        }
+      ]
+    },
+    "gaussian_mixture": {
+      "parameters": {
+        "n_components": 5,
+        "covariance_type": "diag",
+        "selection_metric": "silhouette",
+        "searched_n_min": 5,
+        "searched_n_max": 5
+      },
+      "metrics": {
+        "cluster_count": 5,
+        "noise_count": 0,
+        "noise_rate": 0.0,
+        "silhouette": 0.3843850791454315,
+        "calinski_harabasz": 21457.307745997532,
+        "davies_bouldin": 1.0462068686856802,
+        "bic": 541417.4925194021,
+        "aic": 541205.8178405762
+      },
+      "cluster_sizes": [
+        {
+          "cluster": 0,
+          "count": 9193,
+          "share": 0.18386,
+          "target_rate": 0.08680517785271402
+        },
+        {
+          "cluster": 1,
+          "count": 17065,
+          "share": 0.3413,
+          "target_rate": 0.07471432757105186
+        },
+        {
+          "cluster": 2,
+          "count": 13435,
+          "share": 0.2687,
+          "target_rate": 0.07018980275400075
+        },
+        {
+          "cluster": 3,
+          "count": 6698,
+          "share": 0.13396,
+          "target_rate": 0.09361003284562557
+        },
+        {
+          "cluster": 4,
+          "count": 3609,
+          "share": 0.07218,
+          "target_rate": 0.10529232474369632
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "labels": "artifacts\\clustering\\cluster_labels.csv",
+    "profiles": "artifacts\\clustering\\cluster_profiles.csv",
+    "pca_diagnostics": "artifacts\\clustering\\pca_diagnostics.csv",
+    "plots": {
+      "pca_information_lost": "artifacts\\clustering\\plots\\pca_information_lost.png",
+      "kmeans_pca_scatter": "artifacts\\clustering\\plots\\kmeans_pca_scatter.png",
+      "hdbscan_pca_scatter": "artifacts\\clustering\\plots\\hdbscan_pca_scatter.png",
+      "gaussian_mixture_pca_scatter": "artifacts\\clustering\\plots\\gaussian_mixture_pca_scatter.png"
+    },
+    "markdown_report": "artifacts\\clustering\\clustering_report.md"
+  }
+}

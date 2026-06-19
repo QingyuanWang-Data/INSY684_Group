@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Credit Model Monitoring</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #607080;
+      --line: #d8dee6;
+      --accent: #0f766e;
+      --accent-soft: #e0f2ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 32px max(24px, calc((100vw - 1160px) / 2));
+    }
+    main {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1, h2, h3, h4 { margin: 0 0 12px; }
+    h1 { font-size: 32px; }
+    h2 {
+      margin-top: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 24px;
+    }
+    h3 { margin-top: 20px; font-size: 18px; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 22px;
+    }
+    .snapshot {
+      margin-top: 14px;
+      color: var(--muted);
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .metric-grid.two { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .metric-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfd;
+    }
+    .metric-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .metric-card strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 24px;
+      color: var(--accent);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 4px;
+      font-size: 13px;
+    }
+    .data-table th, .data-table td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .data-table th {
+      background: var(--accent-soft);
+      color: #123b37;
+    }
+    .plot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    img { display: block; width: 100%; height: auto; }
+    figcaption {
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .muted { color: var(--muted); }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Home Credit Model Monitoring</h1>
+    <p class="snapshot">Trained at 2026-06-15T23:29:46.237108+00:00 | selected threshold 0.549 | static report generated 2026-06-19 01:20 UTC</p>
+  </header>
+  <main>
+    
+    <section>
+      <h2>Model Health</h2>
+      <div class="metric-grid">
+    <div class="metric-card">
+      <span>Train ROC-AUC</span>
+      <strong>0.9160</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Validation ROC-AUC</span>
+      <strong>0.7666</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Validation PR-AUC</span>
+      <strong>0.2588</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Validation Brier</span>
+      <strong>0.1883</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Feature Count</span>
+      <strong>698</strong>
+      
+    </div>
+    </div>
+      <h3>Data Snapshot</h3>
+      <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Dataset</th>
+      <th>Rows</th>
+      <th>Positive rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>All sampled data</td>
+      <td>50000</td>
+      <td>0.080460</td>
+    </tr>
+    <tr>
+      <td>Train</td>
+      <td>35000</td>
+      <td>0.080457</td>
+    </tr>
+    <tr>
+      <td>Validation</td>
+      <td>10000</td>
+      <td>0.080500</td>
+    </tr>
+    <tr>
+      <td>Test</td>
+      <td>5000</td>
+      <td>0.080400</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+    
+    
+    <section>
+      <h2>Drift</h2>
+      <div class="metric-grid two">
+    <div class="metric-card">
+      <span>Score PSI: Train vs Validation</span>
+      <strong>0.002662</strong>
+      <span>stable</span>
+    </div>
+    
+    <div class="metric-card">
+      <span>Score PSI: Train vs Test</span>
+      <strong>0.003003</strong>
+      <span>stable</span>
+    </div>
+    </div>
+      <h3>Feature Drift</h3>
+      <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>feature</th>
+      <th>train_vs_validation_psi</th>
+      <th>train_vs_test_psi</th>
+      <th>train_vs_validation_severity</th>
+      <th>train_vs_test_severity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AMT_CREDIT</td>
+      <td>0.001828</td>
+      <td>0.003718</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>CREDIT_INCOME_RATIO</td>
+      <td>0.001472</td>
+      <td>0.001170</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>ANNUITY_INCOME_RATIO</td>
+      <td>0.001391</td>
+      <td>0.004749</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>DAYS_EMPLOYED</td>
+      <td>0.001322</td>
+      <td>0.001101</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>AMT_ANNUITY</td>
+      <td>0.001258</td>
+      <td>0.001672</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>DAYS_BIRTH</td>
+      <td>0.001066</td>
+      <td>0.001731</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+    <tr>
+      <td>AMT_INCOME_TOTAL</td>
+      <td>0.000844</td>
+      <td>0.002015</td>
+      <td>stable</td>
+      <td>stable</td>
+    </tr>
+  </tbody>
+</table>
+      <p class="muted">PSI below 0.10 is stable, 0.10 to 0.25 needs investigation, and above 0.25 should trigger model review.</p>
+    </section>
+    
+    <section><h2>Confusion Matrices</h2>
+<h3>Train</h3>
+<p class="muted">Decision threshold: 0.549</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>29126</td>
+      <td>3058</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>888</td>
+      <td>1928</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Row-normalized rates</h4>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>0.904984</td>
+      <td>0.095016</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>0.315341</td>
+      <td>0.684659</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Validation</h3>
+<p class="muted">Decision threshold: 0.549</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>8197</td>
+      <td>998</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>465</td>
+      <td>340</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Row-normalized rates</h4>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>0.891463</td>
+      <td>0.108537</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>0.577640</td>
+      <td>0.422360</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Test</h3>
+<p class="muted">Decision threshold: 0.549</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>4109</td>
+      <td>489</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>233</td>
+      <td>169</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Row-normalized rates</h4>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>index</th>
+      <th>Predicted repay normal</th>
+      <th>Predicted default risk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Actual repay normal</td>
+      <td>0.893649</td>
+      <td>0.106351</td>
+    </tr>
+    <tr>
+      <td>Actual default risk</td>
+      <td>0.579602</td>
+      <td>0.420398</td>
+    </tr>
+  </tbody>
+</table>
+</section>
+    
+    <section>
+      <h2>Policy Monitoring</h2>
+      <div class="metric-grid">
+    <div class="metric-card">
+      <span>Validation Approval Rate</span>
+      <strong>0.8662</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Default Rate Within Approved</span>
+      <strong>0.0537</strong>
+      
+    </div>
+    
+    <div class="metric-card">
+      <span>Expected Cost per Applicant</span>
+      <strong>0.3323</strong>
+      
+    </div>
+    </div>
+      <h3>Cost Sensitivity by Threshold</h3>
+      <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>false_positive_cost</th>
+      <th>false_negative_cost</th>
+      <th>selected_threshold</th>
+      <th>expected_cost_per_applicant</th>
+      <th>recall</th>
+      <th>specificity</th>
+      <th>approval_rate</th>
+      <th>default_rate_within_approved</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.0</td>
+      <td>2.5</td>
+      <td>0.6078</td>
+      <td>0.1878</td>
+      <td>0.207453</td>
+      <td>0.969222</td>
+      <td>0.9550</td>
+      <td>0.066806</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>0.5490</td>
+      <td>0.3323</td>
+      <td>0.422360</td>
+      <td>0.891463</td>
+      <td>0.8662</td>
+      <td>0.053683</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>7.5</td>
+      <td>0.5098</td>
+      <td>0.4442</td>
+      <td>0.555280</td>
+      <td>0.808918</td>
+      <td>0.7796</td>
+      <td>0.045921</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>10.0</td>
+      <td>0.4608</td>
+      <td>0.5161</td>
+      <td>0.730435</td>
+      <td>0.674715</td>
+      <td>0.6421</td>
+      <td>0.033795</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>15.0</td>
+      <td>0.4314</td>
+      <td>0.6102</td>
+      <td>0.814907</td>
+      <td>0.579445</td>
+      <td>0.5477</td>
+      <td>0.027205</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+    
+    
+    <section>
+      <h2>Subgroup Monitoring</h2>
+      <h3>Validation Subgroups</h3>
+      <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>column</th>
+      <th>group</th>
+      <th>count</th>
+      <th>positive_rate</th>
+      <th>auc</th>
+      <th>pr_auc</th>
+      <th>recall</th>
+      <th>specificity</th>
+      <th>approval_rate</th>
+      <th>default_rate_within_approved</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CODE_GENDER</td>
+      <td>F</td>
+      <td>6618</td>
+      <td>0.070565</td>
+      <td>0.769836</td>
+      <td>0.240109</td>
+      <td>0.379015</td>
+      <td>0.911397</td>
+      <td>0.890904</td>
+      <td>0.049186</td>
+    </tr>
+    <tr>
+      <td>CODE_GENDER</td>
+      <td>M</td>
+      <td>3382</td>
+      <td>0.099941</td>
+      <td>0.750663</td>
+      <td>0.288475</td>
+      <td>0.482249</td>
+      <td>0.851183</td>
+      <td>0.817859</td>
+      <td>0.063268</td>
+    </tr>
+    <tr>
+      <td>NAME_CONTRACT_TYPE</td>
+      <td>Cash loans</td>
+      <td>9110</td>
+      <td>0.083425</td>
+      <td>0.765166</td>
+      <td>0.265725</td>
+      <td>0.425000</td>
+      <td>0.888623</td>
+      <td>0.862459</td>
+      <td>0.055619</td>
+    </tr>
+    <tr>
+      <td>NAME_CONTRACT_TYPE</td>
+      <td>Revolving loans</td>
+      <td>890</td>
+      <td>0.050562</td>
+      <td>0.775805</td>
+      <td>0.164147</td>
+      <td>0.377778</td>
+      <td>0.919527</td>
+      <td>0.904494</td>
+      <td>0.034783</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Working</td>
+      <td>5107</td>
+      <td>0.097709</td>
+      <td>0.774520</td>
+      <td>0.292895</td>
+      <td>0.480962</td>
+      <td>0.861111</td>
+      <td>0.827687</td>
+      <td>0.061273</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Commercial associate</td>
+      <td>2360</td>
+      <td>0.068644</td>
+      <td>0.757894</td>
+      <td>0.228036</td>
+      <td>0.382716</td>
+      <td>0.905823</td>
+      <td>0.886017</td>
+      <td>0.047824</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Pensioner</td>
+      <td>1834</td>
+      <td>0.054526</td>
+      <td>0.698870</td>
+      <td>0.155897</td>
+      <td>0.240000</td>
+      <td>0.944060</td>
+      <td>0.934024</td>
+      <td>0.044367</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>State servant</td>
+      <td>698</td>
+      <td>0.063037</td>
+      <td>0.749896</td>
+      <td>0.242442</td>
+      <td>0.318182</td>
+      <td>0.917431</td>
+      <td>0.902579</td>
+      <td>0.047619</td>
+    </tr>
+    <tr>
+      <td>NAME_EDUCATION_TYPE</td>
+      <td>Secondary / secondary special</td>
+      <td>7096</td>
+      <td>0.088360</td>
+      <td>0.759056</td>
+      <td>0.274512</td>
+      <td>0.454545</td>
+      <td>0.871696</td>
+      <td>0.842869</td>
+      <td>0.057181</td>
+    </tr>
+    <tr>
+      <td>NAME_EDUCATION_TYPE</td>
+      <td>Higher education</td>
+      <td>2435</td>
+      <td>0.054620</td>
+      <td>0.782187</td>
+      <td>0.188877</td>
+      <td>0.270677</td>
+      <td>0.950478</td>
+      <td>0.938398</td>
+      <td>0.042451</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Married</td>
+      <td>6396</td>
+      <td>0.074265</td>
+      <td>0.774047</td>
+      <td>0.263460</td>
+      <td>0.427368</td>
+      <td>0.897821</td>
+      <td>0.873671</td>
+      <td>0.048676</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Single / not married</td>
+      <td>1502</td>
+      <td>0.095206</td>
+      <td>0.760406</td>
+      <td>0.285693</td>
+      <td>0.496503</td>
+      <td>0.847682</td>
+      <td>0.814913</td>
+      <td>0.058824</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Civil marriage</td>
+      <td>949</td>
+      <td>0.093783</td>
+      <td>0.773386</td>
+      <td>0.281742</td>
+      <td>0.460674</td>
+      <td>0.873256</td>
+      <td>0.841939</td>
+      <td>0.060075</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Separated</td>
+      <td>642</td>
+      <td>0.085670</td>
+      <td>0.746817</td>
+      <td>0.230964</td>
+      <td>0.327273</td>
+      <td>0.918228</td>
+      <td>0.897196</td>
+      <td>0.064236</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Widow</td>
+      <td>511</td>
+      <td>0.084149</td>
+      <td>0.721030</td>
+      <td>0.214778</td>
+      <td>0.162791</td>
+      <td>0.938034</td>
+      <td>0.929550</td>
+      <td>0.075789</td>
+    </tr>
+  </tbody>
+</table>
+      <h3>Test Subgroups</h3>
+      <table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>column</th>
+      <th>group</th>
+      <th>count</th>
+      <th>positive_rate</th>
+      <th>auc</th>
+      <th>pr_auc</th>
+      <th>recall</th>
+      <th>specificity</th>
+      <th>approval_rate</th>
+      <th>default_rate_within_approved</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CODE_GENDER</td>
+      <td>F</td>
+      <td>3315</td>
+      <td>0.071493</td>
+      <td>0.767946</td>
+      <td>0.229656</td>
+      <td>0.392405</td>
+      <td>0.913905</td>
+      <td>0.892006</td>
+      <td>0.048698</td>
+    </tr>
+    <tr>
+      <td>CODE_GENDER</td>
+      <td>M</td>
+      <td>1685</td>
+      <td>0.097923</td>
+      <td>0.748620</td>
+      <td>0.239132</td>
+      <td>0.460606</td>
+      <td>0.852632</td>
+      <td>0.821958</td>
+      <td>0.064260</td>
+    </tr>
+    <tr>
+      <td>NAME_CONTRACT_TYPE</td>
+      <td>Cash loans</td>
+      <td>4553</td>
+      <td>0.082144</td>
+      <td>0.767304</td>
+      <td>0.239921</td>
+      <td>0.441176</td>
+      <td>0.892079</td>
+      <td>0.864705</td>
+      <td>0.053086</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Working</td>
+      <td>2565</td>
+      <td>0.097856</td>
+      <td>0.756215</td>
+      <td>0.246662</td>
+      <td>0.450199</td>
+      <td>0.858254</td>
+      <td>0.828070</td>
+      <td>0.064972</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Commercial associate</td>
+      <td>1189</td>
+      <td>0.074012</td>
+      <td>0.735261</td>
+      <td>0.226933</td>
+      <td>0.386364</td>
+      <td>0.911898</td>
+      <td>0.889823</td>
+      <td>0.051040</td>
+    </tr>
+    <tr>
+      <td>NAME_INCOME_TYPE</td>
+      <td>Pensioner</td>
+      <td>876</td>
+      <td>0.055936</td>
+      <td>0.795079</td>
+      <td>0.240201</td>
+      <td>0.326531</td>
+      <td>0.962515</td>
+      <td>0.946347</td>
+      <td>0.039807</td>
+    </tr>
+    <tr>
+      <td>NAME_EDUCATION_TYPE</td>
+      <td>Secondary / secondary special</td>
+      <td>3603</td>
+      <td>0.092978</td>
+      <td>0.755285</td>
+      <td>0.246190</td>
+      <td>0.447761</td>
+      <td>0.878519</td>
+      <td>0.848182</td>
+      <td>0.060537</td>
+    </tr>
+    <tr>
+      <td>NAME_EDUCATION_TYPE</td>
+      <td>Higher education</td>
+      <td>1167</td>
+      <td>0.042845</td>
+      <td>0.767252</td>
+      <td>0.159478</td>
+      <td>0.280000</td>
+      <td>0.940913</td>
+      <td>0.931448</td>
+      <td>0.033119</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Married</td>
+      <td>3152</td>
+      <td>0.078363</td>
+      <td>0.757010</td>
+      <td>0.228791</td>
+      <td>0.408907</td>
+      <td>0.899828</td>
+      <td>0.875635</td>
+      <td>0.052899</td>
+    </tr>
+    <tr>
+      <td>NAME_FAMILY_STATUS</td>
+      <td>Single / not married</td>
+      <td>749</td>
+      <td>0.088117</td>
+      <td>0.770775</td>
+      <td>0.226452</td>
+      <td>0.469697</td>
+      <td>0.871157</td>
+      <td>0.841121</td>
+      <td>0.055556</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+    
+    
+    <section>
+      <h2>Evidence Plots</h2>
+      <div class="plot-grid"><p class="muted">No monitoring plot images found under artifacts/plots.</p></div>
+    </section>
+    
+  </main>
+</body>
+</html>
