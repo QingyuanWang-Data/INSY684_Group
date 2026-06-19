@@ -34,14 +34,21 @@ def as_float(row: dict[str, str], key: str, default: float = 0.0) -> float:
         return default
 
 
-def find_threshold_row(rows: list[dict[str, str]], threshold: float) -> dict[str, str] | None:
+def find_threshold_row(
+    rows: list[dict[str, str]],
+    threshold: float,
+) -> dict[str, str] | None:
     for row in rows:
         if abs(as_float(row, "selected_threshold") - threshold) < 1e-6:
             return row
     return rows[0] if rows else None
 
 
-def largest_gap(rows: list[dict[str, str]], column: str, metric: str) -> tuple[str, str, float] | None:
+def largest_gap(
+    rows: list[dict[str, str]],
+    column: str,
+    metric: str,
+) -> tuple[str, str, float] | None:
     filtered = [row for row in rows if row.get("column") == column and row.get(metric)]
     if len(filtered) < 2:
         return None
@@ -86,7 +93,10 @@ def build_report(artifact_dir: Path) -> str:
         "",
         "## Purpose",
         "",
-        "This report translates the current model evidence into business-facing policy language. It is intended for the business lead, final presentation, and project documentation. It should be refreshed when model artifacts or threshold policy change.",
+        "This report translates the current model evidence into business-facing "
+        "policy language. It is intended for the business lead, final "
+        "presentation, and project documentation. It should be refreshed when "
+        "model artifacts or threshold policy change.",
         "",
         "## Model Evidence Snapshot",
         "",
@@ -104,19 +114,37 @@ def build_report(artifact_dir: Path) -> str:
         f"| Recall for payment-difficulty applicants | `{pct(recall)}` |",
         f"| Specificity for normal-repayment applicants | `{pct(specificity)}` |",
         "",
-        f"The final test ROC-AUC of `{DEFAULT_TEST_AUC:.4f}` confirms that the current Course 2 model ranks applicants meaningfully better than random on the held-out test split. The Course 2 result should still not be interpreted only as a score competition against the Course 1 baseline. The main Course 2 value is the production-oriented workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, monitoring reports, fairness review, and deployment documentation.",
+        f"The final test ROC-AUC of `{DEFAULT_TEST_AUC:.4f}` confirms that the "
+        "current Course 2 model ranks applicants meaningfully better than "
+        "random on the held-out test split. The Course 2 result should still "
+        "not be interpreted only as a score competition against the Course 1 "
+        "baseline. The main Course 2 value is the production-oriented "
+        "workflow: MLflow hooks, Optuna tuning, Docker packaging, CI checks, "
+        "monitoring reports, fairness review, and deployment documentation.",
         "",
         "## Threshold and Business Policy Interpretation",
         "",
-        f"At threshold `{DEFAULT_THRESHOLD:.3f}`, the current policy approves about `{pct(approval_rate)}` of applicants in the validation sample, with an approved default rate of about `{pct(approved_default_rate)}`. This supports a growth-oriented policy, but it still misses a meaningful share of risky applicants because recall is about `{pct(recall)}`.",
+        f"At threshold `{DEFAULT_THRESHOLD:.3f}`, the current policy approves "
+        f"about `{pct(approval_rate)}` of applicants in the validation sample, "
+        "with an approved default rate of about "
+        f"`{pct(approved_default_rate)}`. This supports a growth-oriented "
+        "policy, but it still misses a meaningful share of risky applicants "
+        f"because recall is about `{pct(recall)}`.",
         "",
-        "The cost-sensitivity table shows the expected policy tradeoff: when false negatives become more expensive, the selected threshold moves lower. Lower thresholds catch more risky applicants but reduce approval volume and increase manual review or stricter-treatment cases.",
+        "The cost-sensitivity table shows the expected policy tradeoff: when "
+        "false negatives become more expensive, the selected threshold moves "
+        "lower. Lower thresholds catch more risky applicants but reduce "
+        "approval volume and increase manual review or stricter-treatment "
+        "cases.",
         "",
         "| Business objective | Likely threshold direction | Expected impact |",
         "| --- | --- | --- |",
-        "| Protect approval volume and customer growth | Higher threshold | More approvals, but higher risk leakage |",
-        "| Reduce missed risky borrowers | Lower threshold | More risk capture, but more applicants delayed or rejected |",
-        "| Balance growth and risk | Three-band policy | Low risk auto-approve, medium risk review, high risk stricter treatment |",
+        "| Protect approval volume and customer growth | Higher threshold | "
+        "More approvals, but higher risk leakage |",
+        "| Reduce missed risky borrowers | Lower threshold | More risk capture, "
+        "but more applicants delayed or rejected |",
+        "| Balance growth and risk | Three-band policy | Low risk auto-approve, "
+        "medium risk review, high risk stricter treatment |",
         "",
         "## Fairness and Governance Interpretation",
         "",
@@ -124,28 +152,45 @@ def build_report(artifact_dir: Path) -> str:
 
     if gender_gap:
         low, high, gap = gender_gap
-        lines.append(f"- Gender recall gap: `{low}` has lower recall than `{high}` by about `{gap:.4f}`.")
+        lines.append(
+            f"- Gender recall gap: `{low}` has lower recall than `{high}` "
+            f"by about `{gap:.4f}`."
+        )
     if income_gap:
         low, high, gap = income_gap
-        lines.append(f"- Income-type recall gap: `{low}` has lower recall than `{high}` by about `{gap:.4f}`.")
+        lines.append(
+            f"- Income-type recall gap: `{low}` has lower recall than `{high}` "
+            f"by about `{gap:.4f}`."
+        )
     if not gender_gap and not income_gap:
-        lines.append("- Subgroup metrics were not found locally. Use `artifacts/validation_subgroup_metrics.csv` when available.")
+        lines.append(
+            "- Subgroup metrics were not found locally. Use "
+            "`artifacts/validation_subgroup_metrics.csv` when available."
+        )
 
     lines.extend(
         [
-            "- These gaps do not automatically prove unfairness, but they are strong reasons to avoid fully automated denial decisions.",
+            "- These gaps do not automatically prove unfairness, but they are "
+            "strong reasons to avoid fully automated denial decisions.",
             "- Medium-risk applicants should remain eligible for manual review.",
-            "- Subgroup metrics should be recomputed after retraining, threshold changes, or data updates.",
+            "- Subgroup metrics should be recomputed after retraining, threshold "
+            "changes, or data updates.",
             "",
             "## Business Recommendation",
             "",
-            "Use the model as a credit-risk decision-support system rather than a fully automated lending decision engine. The recommended business framing is:",
+            "Use the model as a credit-risk decision-support system rather than "
+            "a fully automated lending decision engine. The recommended "
+            "business framing is:",
             "",
             "1. Low-risk band: consider auto-approval or standard terms.",
             "2. Medium-risk band: route to manual review.",
-            "3. High-risk band: consider decline, lower credit limit, stricter pricing, or additional documentation.",
+            "3. High-risk band: consider decline, lower credit limit, stricter "
+            "pricing, or additional documentation.",
             "",
-        "Before final submission, the business section should be checked against the final main branch results, final threshold policy, and any new fairness or monitoring outputs that the team generates.",
+            "Before final submission, the business section should be checked "
+            "against the final main branch results, final threshold policy, "
+            "and any new fairness or monitoring outputs that the team "
+            "generates.",
             "",
         ]
     )
