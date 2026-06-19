@@ -1,0 +1,4 @@
+scenario,annual_applications,approval_rate,approved_loans,approved_default_rate,expected_defaults,average_funded_amount,loss_given_default,expected_loss,savings_vs_baseline,notes
+baseline_policy,100000,0.600000,60000,0.060000,3600.00,8000.00,0.450000,12960000.00,0.00,Planning baseline from the Course 1 business context.
+same_approval_volume_model_risk,100000,0.600000,60000,0.053700,3222.00,8000.00,0.450000,11599200.00,1360800.00,Uses the model observed approved default rate while holding approval volume constant.
+current_validation_policy,100000,0.866200,86620,0.053700,4651.49,8000.00,0.450000,16745338.80,-3785338.80,Uses the current validation approval rate and approved default rate at threshold 0.549.
