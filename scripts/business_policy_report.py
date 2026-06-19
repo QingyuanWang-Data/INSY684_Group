@@ -11,7 +11,6 @@ import argparse
 import csv
 from pathlib import Path
 
-
 DEFAULT_BASELINE_AUC = 0.7858
 DEFAULT_CURRENT_AUC = 0.7666
 DEFAULT_TEST_AUC = 0.7647

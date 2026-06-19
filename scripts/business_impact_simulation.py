@@ -74,7 +74,8 @@ def build_scenarios(
             model_default_rate,
             average_funded_amount,
             loss_given_default,
-            "Uses the model observed approved default rate while holding approval volume constant.",
+            "Uses the model observed approved default rate while holding "
+            "approval volume constant.",
         ),
         Scenario(
             "current_validation_policy",
