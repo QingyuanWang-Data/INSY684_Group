@@ -1,0 +1,15 @@
+INSY684 group project working notes
+
+Current status:
+- The course 1 Home Credit project has been migrated into this repository.
+- Core code lives under src/homecredit_service.
+- Tests live under tests.
+- Project documentation lives under docs.
+- Presentation materials should be added under presentations.
+
+Near-term work:
+1. Add MLflow experiment tracking.
+2. Add hyperparameter optimization.
+3. Add formal fairness and ethical AI analysis.
+4. Add monitoring reports for drift and performance.
+5. Prepare weekly and final presentation materials.

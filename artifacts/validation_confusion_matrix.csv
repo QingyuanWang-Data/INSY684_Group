@@ -1,0 +1,6 @@
+split,validation
+threshold,0.549
+
+actual_class,pred_0_count,pred_1_count,pred_0_rate,pred_1_rate
+true_0,8197,998,0.8914627514953779,0.10853724850462208
+true_1,465,340,0.577639751552795,0.422360248447205

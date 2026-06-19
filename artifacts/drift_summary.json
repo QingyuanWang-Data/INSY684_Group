@@ -1,0 +1,63 @@
+{
+  "score_distribution": {
+    "train_vs_validation_psi": 0.0026618620249715804,
+    "train_vs_validation_severity": "stable",
+    "train_vs_test_psi": 0.0030029542608472795,
+    "train_vs_test_severity": "stable"
+  },
+  "feature_distribution": {
+    "rows": [
+      {
+        "feature": "AMT_INCOME_TOTAL",
+        "train_vs_validation_psi": 0.000844376125637813,
+        "train_vs_test_psi": 0.002014665194036832,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "AMT_CREDIT",
+        "train_vs_validation_psi": 0.0018279903010161192,
+        "train_vs_test_psi": 0.0037183087993852117,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "AMT_ANNUITY",
+        "train_vs_validation_psi": 0.0012575503035257537,
+        "train_vs_test_psi": 0.0016721779691602696,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "DAYS_BIRTH",
+        "train_vs_validation_psi": 0.0010663031953969105,
+        "train_vs_test_psi": 0.00173117203517807,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "DAYS_EMPLOYED",
+        "train_vs_validation_psi": 0.0013223097859471904,
+        "train_vs_test_psi": 0.0011012871914755182,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "CREDIT_INCOME_RATIO",
+        "train_vs_validation_psi": 0.0014719840671474464,
+        "train_vs_test_psi": 0.0011696020239250027,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      },
+      {
+        "feature": "ANNUITY_INCOME_RATIO",
+        "train_vs_validation_psi": 0.001390832058287379,
+        "train_vs_test_psi": 0.0047490558277400565,
+        "train_vs_validation_severity": "stable",
+        "train_vs_test_severity": "stable"
+      }
+    ],
+    "max_train_vs_validation_psi": 0.0018279903010161192,
+    "max_train_vs_test_psi": 0.0047490558277400565
+  }
+}
