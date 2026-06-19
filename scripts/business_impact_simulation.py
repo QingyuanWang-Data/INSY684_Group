@@ -146,7 +146,7 @@ def build_markdown(scenarios: list[Scenario], baseline_loss: float) -> str:
         f"| Loss given default | `{pct(scenarios[0].loss_given_default)}` |",
         f"| Baseline approval rate | `{pct(scenarios[0].approval_rate)}` |",
         f"| Baseline approved default rate | `{pct(scenarios[0].approved_default_rate)}` |",
-        f"| Current model threshold | `0.549` |",
+        "| Current model threshold | `0.549` |",
         f"| Current validation approval rate | `{pct(scenarios[2].approval_rate)}` |",
         f"| Current approved default rate | `{pct(scenarios[2].approved_default_rate)}` |",
         "",
