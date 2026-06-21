@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 from time import perf_counter
 from typing import Any
+
+import matplotlib
+
+matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -39,6 +44,9 @@ MODEL_RESULTS = ARTIFACTS / "model_with_clusting" / "model_with_clusting_results
 MODEL_REPORT = ARTIFACTS / "model_with_clusting" / "model_with_clusting_report.json"
 IMPORTANCE = ARTIFACTS / "model_with_clusting" / "lightgbm_feature_importance.csv"
 CLUSTER_PLOTS = ARTIFACTS / "clustering" / "plots"
+DASHBOARD_MLFLOW_DB = Path(
+    os.environ.get("HC_DASHBOARD_MLFLOW_DB", str(ARTIFACTS / "dashboard_mlflow.db"))
+)
 
 
 st.set_page_config(
@@ -348,11 +356,11 @@ def image_gallery(paths: list[Path]) -> None:
     for start in range(0, len(existing), 2):
         cols = st.columns(2)
         for column, path in zip(cols, existing[start:start + 2]):
-            column.image(str(path), use_container_width=True)
+            column.image(str(path), width="stretch")
 
 
 def dashboard_mlflow_runs() -> list[dict[str, Any]]:
-    database = ARTIFACTS / "dashboard_mlflow.db"
+    database = DASHBOARD_MLFLOW_DB
     if not database.exists():
         return []
     client = MlflowClient(tracking_uri=f"sqlite:///{database.resolve().as_posix()}")
@@ -544,8 +552,8 @@ with tabs[0]:
     optimal = scenarios.loc[scenarios["scenario_cost"].idxmin()]
 
     run_col, auto_col, blank_col = st.columns([1, 1, 3])
-    run_clicked = run_col.button("Run via FastAPI", type="primary", use_container_width=True)
-    optimal_clicked = auto_col.button("Run cost-optimal", use_container_width=True)
+    run_clicked = run_col.button("Run via FastAPI", type="primary", width="stretch")
+    optimal_clicked = auto_col.button("Run cost-optimal", width="stretch")
 
     if run_clicked or optimal_clicked:
         requested_threshold = float(optimal["threshold"] if optimal_clicked else threshold)
@@ -596,8 +604,8 @@ with tabs[0]:
     metric_cols[4].metric("Cost / 1,000", f"{active['scenario_cost'] * 1000:,.1f}")
 
     chart_col, matrix_col = st.columns([1.65, 1])
-    chart_col.pyplot(scenario_figure(active_costs, active), use_container_width=True)
-    matrix_col.pyplot(confusion_figure(active, positives, negatives), use_container_width=True)
+    chart_col.pyplot(scenario_figure(active_costs, active), width="stretch")
+    matrix_col.pyplot(confusion_figure(active, positives, negatives), width="stretch")
 
     if last_run:
         st.subheader("Execution trace")
@@ -623,20 +631,17 @@ with tabs[0]:
         st.info("Ready. Click Run via FastAPI to create an auditable scenario run.")
 
 with tabs[1]:
-    best = model_report.get("best_overall", {})
-    top_test_auc = float(model_results["test_auc"].max()) if not model_results.empty else 0.0
-    candidate = training.get("candidate_metrics", {})
     cv = training.get("cross_validation", {})
     temporal = training.get("temporal_validation", {})
     cols = st.columns(5)
-    cols[0].metric("Best model", str(best.get("model", "n/a")).replace("_", " ").title())
-    cols[1].metric("Top test AUC", f"{top_test_auc:.3f}")
-    cols[2].metric("Focal validation AUC", f"{candidate.get('focal_loss', {}).get('validation_auc', 0):.3f}")
+    cols[0].metric("Production model", "LightGBM focal")
+    cols[1].metric("Validation AUC", f"{training.get('validation_auc', 0):.3f}")
+    cols[2].metric("Final test AUC", f"{training.get('test_auc', 0):.3f}")
     cols[3].metric("3-fold CV AUC", f"{cv.get('auc_mean', 0):.3f}")
     cols[4].metric("Temporal holdout AUC", f"{temporal.get('holdout_auc', 0):.3f}")
 
     left, right = st.columns([1.7, 1])
-    left.pyplot(model_comparison_figure(model_results), use_container_width=True)
+    left.pyplot(model_comparison_figure(model_results), width="stretch")
     with right:
         st.subheader("What we modeled")
         st.markdown("""
@@ -699,7 +704,7 @@ with tabs[2]:
     )
     selected = model_report.get("selected_features", {})
     a, b = st.columns([1.5, 1])
-    a.pyplot(importance_figure(importance), use_container_width=True)
+    a.pyplot(importance_figure(importance), width="stretch")
     with b:
         st.metric("Engineered feature space", training.get("feature_count", 0))
         st.metric("Feature selection", "LightGBM gain")
@@ -742,7 +747,7 @@ with tabs[3]:
         evidence_left, evidence_right = st.columns([1.65, 1])
         evidence_left.pyplot(
             scenario_figure(evidence_scenarios, evidence_active),
-            use_container_width=True,
+            width="stretch",
         )
         evidence_right.pyplot(
             confusion_figure(
@@ -750,16 +755,16 @@ with tabs[3]:
                 int(evidence_run["positive_count"]),
                 int(evidence_run["negative_count"]),
             ),
-            use_container_width=True,
+            width="stretch",
         )
         comparison_left, comparison_right = st.columns([1.35, 1])
         comparison_left.pyplot(
             policy_comparison_figure(evidence_scenarios, evidence_active),
-            use_container_width=True,
+            width="stretch",
         )
         comparison_right.pyplot(
             cost_breakdown_figure(evidence_active),
-            use_container_width=True,
+            width="stretch",
         )
         st.success(
             f"Dynamic evidence from {evidence_run['run_id']} · "
@@ -814,10 +819,10 @@ with tabs[4]:
 
     st.subheader("Quality gate status")
     quality_values = [
-        ("pytest", "17 / 17 passed", "pass"),
+        ("pytest", "19 / 19 passed", "pass"),
         ("ty", "Passed", "pass"),
-        ("Ruff", "44 findings", "warn"),
-        ("Cloud workflow", "Not queried", "info"),
+        ("Ruff", "Passed", "pass"),
+        ("Cloud workflow", "Configured", "info"),
     ]
     quality_html = "".join(
         f'<div class="status-card {kind}"><strong>{label}</strong><span>{value}</span></div>'
@@ -825,8 +830,8 @@ with tabs[4]:
     )
     st.markdown(f'<div class="status-grid">{quality_html}</div>', unsafe_allow_html=True)
     st.warning(
-        "Configured is not the same as passing: CI and Docker workflows exist, but cloud status "
-        "has not been queried. Local pytest and ty pass; Ruff currently blocks a clean gate."
+        "The reproducible local gate passes Ruff, ty and all tests. GitHub Actions and the "
+        "Docker build workflow are configured; the dashboard does not claim a live cloud status."
     )
 
     production_run = st.session_state.get("last_scenario")
@@ -879,7 +884,7 @@ with tabs[4]:
     ):
         trials = tuning.get("trials", [])
         if trials:
-            st.pyplot(optuna_figure(tuning), use_container_width=True)
+            st.pyplot(optuna_figure(tuning), width="stretch")
             trial_frame = pd.DataFrame(
                 [
                     {
@@ -949,9 +954,9 @@ with tabs[4]:
             detail_cards(
                 {
                     "1 · Dependencies": "uv sync --all-groups",
-                    "2 · Lint": "ruff check . · currently blocked",
+                    "2 · Lint": "ruff check . · passed",
                     "3 · Types": "ty check src tests · passed",
-                    "4 · Tests": "pytest · 17/17 passed",
+                    "4 · Tests": "pytest · 19/19 passed",
                     "5 · Governance": "report smoke test configured",
                     "6 · Container": "Docker image build configured",
                 }
@@ -973,7 +978,7 @@ with tabs[4]:
             )
             st.pyplot(
                 timing_figure(production_run["timings_ms"]),
-                use_container_width=True,
+                width="stretch",
             )
             st.markdown(
                 "Component bars are mutually exclusive. Backend total is their aggregate; "

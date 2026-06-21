@@ -31,6 +31,9 @@ Main goals:
 |-- docs/                        # Business, data, validation, governance docs
 |-- presentations/               # Final-deck technical section
 |-- artifacts/                   # Baseline reports and plots
+|-- INSY684_Group-Extend/        # Interactive Streamlit decision dashboard
+|-- run_dashboard.cmd            # Portable Windows dashboard launcher
+|-- run_api.cmd                  # Portable Windows API launcher
 |-- Dockerfile                   # Containerized API runtime
 |-- Makefile                     # Common project commands
 |-- pyproject.toml               # Python package and tool configuration
@@ -47,6 +50,40 @@ Main goals:
 - Project plan and requirement mapping: `docs/PROJECT_PLAN.md`
 - Final technical deck section:
   `presentations/insy684-mlops-technical-section.pptx`
+
+## Start Here: Fully Reproducible Demo
+
+The repository ships with the approved LightGBM model bundle and all dashboard
+evidence. Raw Kaggle data is needed only to retrain the model, not to review the
+dashboard or call the prediction API.
+
+1. Install [`uv`](https://docs.astral.sh/uv/getting-started/installation/).
+2. From the repository root, install the locked environment:
+
+   ```bash
+   uv sync --all-groups --locked
+   ```
+
+3. Launch the interactive decision dashboard:
+
+   ```bash
+   uv run --group dashboard streamlit run INSY684_Group-Extend/INSY684_Group-Extend/monitoring_dashboard/monitoring_dashboard.py
+   ```
+
+   On Windows, double-click `run_dashboard.cmd` instead.
+
+4. In a second terminal, launch the model-serving API:
+
+   ```bash
+   uv run uvicorn homecredit_service.main:app --host 0.0.0.0 --port 8000
+   ```
+
+   On Windows, double-click `run_api.cmd`. API documentation is available at
+   `http://localhost:8000/docs`; readiness is available at
+   `http://localhost:8000/ready`.
+
+The Dashboard's threshold controls perform post-training policy simulation over
+saved validation predictions. They intentionally do not retrain LightGBM.
 
 ## Data
 
@@ -73,7 +110,7 @@ Required files:
 Recommended with `uv`:
 
 ```bash
-make install
+uv sync --all-groups --locked
 ```
 
 Alternative with pip:
@@ -99,7 +136,7 @@ make quality
 On Windows without `make`, run the PowerShell equivalent:
 
 ```powershell
-.\scripts\quality.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\quality.ps1
 ```
 
 ## Training
@@ -187,8 +224,7 @@ Useful endpoints:
 - `POST /predict/batch`
 
 `/health` verifies that the API process is alive. `/ready` verifies that the
-model bundle has been loaded; it will return unavailable until
-`artifacts/model_bundle.joblib` exists locally or is mounted into the container.
+versioned `artifacts/model_bundle.joblib` has loaded successfully.
 
 ## Docker
 
@@ -220,10 +256,16 @@ Already migrated from the course 1 project:
 - Optuna tuning command for LightGBM hyperparameters
 - Generated fairness, monitoring, model-card, and code-quality reports
 
-## Remaining Before Final Submission
+## Final Evidence Snapshot
 
-- Fill in the final team name, member names, and GitHub IDs in
-  `docs/SUBMISSION_INFO.md`.
-- If the raw Kaggle data is available, rerun `make train-mlflow` and `make tune`
-  so the latest experiment outputs can be shown in the final slides.
-- Merge the technical section PPT into the group presentation deck.
+- Production model: LightGBM with focal loss and early stopping
+- Validation ROC-AUC: `0.7666`
+- Final test ROC-AUC: `0.7647`
+- Final test PR-AUC: `0.2303`
+- Engineered model features: `698`
+- Optuna best validation ROC-AUC: `0.7679` on the documented sampled study
+- Quality gate: Ruff, ty, Dashboard smoke test, API tests, and governance tests
+- Packaging: locked `uv` environment, source/wheel build, Docker build workflow
+
+See `docs/VALIDATION.md`, `docs/MODEL_CARD.md`, and
+`artifacts/training_report.json` for definitions and complete evidence.

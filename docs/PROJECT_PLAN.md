@@ -34,13 +34,11 @@ extends it for the INSY684 group assignment. The migrated baseline includes:
 | Explainability | Covered | Global feature importance and governance explanation in docs. |
 | Fairness and ethical AI | Covered | `docs/FAIRNESS.md` and `docs/MODEL_CARD.md`. |
 | Model tracking / drift | Covered | `docs/MONITORING.md`, PSI drift diagnostics, and generated reports. |
-| Final presentation | Covered as technical section | PPTX available in `presentations/`; group title/team slides still need final names. |
+| Final presentation | Covered | Reviewed PPTX available in `presentations/` with final metrics and team context. |
 
-## Proposed Work Order Before Submission
+## Final Release Procedure
 
-1. Fill in team name, member names, and GitHub IDs in
-   `docs/SUBMISSION_INFO.md`.
-2. If raw Kaggle data is available locally, rerun MLflow training and Optuna
+1. If raw Kaggle data is available locally, rerun MLflow training and Optuna
    tuning:
 
    ```bash
@@ -49,19 +47,17 @@ extends it for the INSY684 group assignment. The migrated baseline includes:
    make reports
    ```
 
-3. Add the generated MLflow and tuning evidence to the group slide deck.
-4. Run the local quality gate:
+2. Run the local quality gate:
 
    ```powershell
    .\scripts\quality.ps1
    ```
 
-5. Confirm the final branch is pushed to GitHub before the June 21, 2026
-   submission deadline.
+3. Confirm the final `code` branch is synchronized with GitHub.
 
-## Team Information To Fill In
+## Team Information
 
-- Team name: To be filled
+- Team name: Home Credit Risk MLOps Team
 - GitHub repository: `https://github.com/QingyuanWang-Data/INSY684_Group`
 - Working branch: `code`
-- Team members and GitHub IDs: see `docs/SUBMISSION_INFO.md`
+- Team members, roles and GitHub IDs: see `docs/SUBMISSION_INFO.md`

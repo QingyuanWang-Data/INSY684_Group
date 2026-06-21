@@ -2,7 +2,7 @@ UV ?= uv
 DATA_DIR ?= homecreditdefaultriskdata
 ARTIFACT_DIR ?= artifacts
 
-.PHONY: install lock lint format typecheck test quality train train-mlflow tune reports mlflow-ui final-eval run
+.PHONY: install lock lint format typecheck test quality train train-mlflow tune reports mlflow-ui final-eval run dashboard
 
 install:
 	$(UV) sync --all-groups
@@ -44,3 +44,6 @@ final-eval:
 
 run:
 	HC_ARTIFACT_PATH=$(ARTIFACT_DIR)/model_bundle.joblib $(UV) run uvicorn homecredit_service.main:app --host 0.0.0.0 --port 8000
+
+dashboard:
+	$(UV) run --group dashboard streamlit run INSY684_Group-Extend/INSY684_Group-Extend/monitoring_dashboard/monitoring_dashboard.py
