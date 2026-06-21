@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 from time import perf_counter
@@ -15,7 +16,9 @@ from pydantic import BaseModel, Field
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ARTIFACTS = PROJECT_ROOT / "artifacts"
 TRAINING_REPORT = ARTIFACTS / "training_report.json"
-MLFLOW_DB = ARTIFACTS / "dashboard_mlflow.db"
+MLFLOW_DB = Path(
+    os.environ.get("HC_DASHBOARD_MLFLOW_DB", str(ARTIFACTS / "dashboard_mlflow.db"))
+)
 
 
 class ScenarioRequest(BaseModel):

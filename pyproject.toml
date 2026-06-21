@@ -14,7 +14,7 @@ dependencies = [
   "pydantic-settings>=2.10.0",
   "pandas>=2.3.0",
   "numpy>=2.3.0",
-  "scikit-learn>=1.7.0",
+  "scikit-learn>=1.8,<1.9",
   "lightgbm>=4.6.0",
   "joblib>=1.5.0",
   "matplotlib>=3.9.0",
@@ -29,6 +29,9 @@ generate-governance-reports = "homecredit_service.reporting:main"
 run-homecredit-local-app = "homecredit_service.local_app:main"
 
 [dependency-groups]
+dashboard = [
+  "streamlit>=1.45,<2",
+]
 dev = [
   "pytest>=8.4.0",
   "httpx>=0.28.0",

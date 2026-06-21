@@ -344,7 +344,11 @@ def build_model_card(artifact_dir: Path) -> str:
         "\n".join(
             [
                 f"- Rows: `{dataset_size.get('rows', 'n/a')}`",
-                f"- Columns: `{dataset_size.get('columns', 'n/a')}`",
+                (
+                    "- Training frame columns: "
+                    f"`{dataset_size.get('columns', 'n/a')}` including `SK_ID_CURR` and `TARGET`"
+                ),
+                f"- Model feature count: `{training_report.get('feature_count', 'n/a')}`",
                 f"- Positive class rate: `{positive_rate}`",
                 f"- Negative class rate: `{negative_rate}`",
             ]

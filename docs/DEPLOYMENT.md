@@ -24,8 +24,12 @@ make run
 For Windows without `make`:
 
 ```powershell
-uv run uvicorn homecredit_service.main:app --host 0.0.0.0 --port 8000
+.\run_api.cmd
 ```
+
+The repository includes the approved `artifacts/model_bundle.joblib`, so a
+clean clone is immediately ready for `/metadata`, `/feature-importance` and
+prediction requests after dependency installation.
 
 ## Docker Run
 
@@ -60,8 +64,8 @@ the team.
 ## Release Checklist
 
 1. Run `.\scripts\quality.ps1` or `make quality`.
-2. Train or select the approved model bundle.
-3. Store `artifacts/model_bundle.joblib` in the release artifact location.
+2. Confirm the versioned approved model bundle matches `artifacts/training_report.json`.
+3. Store or mount `artifacts/model_bundle.joblib` in the release artifact location.
 4. Build the Docker image.
 5. Deploy the image with the artifact mounted or downloaded at startup.
 6. Confirm `/health`, `/ready`, and a sample `/predict` request.

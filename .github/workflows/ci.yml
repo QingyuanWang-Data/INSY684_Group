@@ -25,7 +25,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
-        run: uv sync --all-groups --python ${{ matrix.python-version }}
+        run: uv sync --all-groups --locked --python ${{ matrix.python-version }}
 
       - name: Ruff
         run: uv run ruff check .

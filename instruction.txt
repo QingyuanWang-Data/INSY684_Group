@@ -1,15 +1,17 @@
-INSY684 group project working notes
+INSY684 Home Credit Risk MLOps Team - Final Review Guide
 
-Current status:
-- The course 1 Home Credit project has been migrated into this repository.
-- Core code lives under src/homecredit_service.
-- Tests live under tests.
-- Project documentation lives under docs.
-- Presentation materials should be added under presentations.
+Recommended Windows demo:
+1. Install uv: https://docs.astral.sh/uv/getting-started/installation/
+2. Double-click run_dashboard.cmd for the interactive policy dashboard.
+3. Double-click run_api.cmd for the model prediction API.
+4. Open http://localhost:8000/docs for the API contract.
 
-Near-term work:
-1. Add MLflow experiment tracking.
-2. Add hyperparameter optimization.
-3. Add formal fairness and ethical AI analysis.
-4. Add monitoring reports for drift and performance.
-5. Prepare weekly and final presentation materials.
+Cross-platform commands:
+- uv sync --all-groups --locked
+- uv run --group dashboard streamlit run INSY684_Group-Extend/INSY684_Group-Extend/monitoring_dashboard/monitoring_dashboard.py
+- uv run uvicorn homecredit_service.main:app --host 0.0.0.0 --port 8000
+- uv run pytest
+
+The approved model bundle and dashboard evidence are included. Raw Kaggle CSV
+files are required only for retraining. Full documentation is in README.md and
+docs/SUBMISSION_INFO.md.

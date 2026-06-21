@@ -1,42 +1,44 @@
-# INSY684 Group — Extended
+# Home Credit Decision Lab
 
-## Run the monitoring dashboard
+This directory contains the Streamlit policy dashboard and the clustering/model
+evidence used by the integrated INSY684 project. The canonical setup and launch
+instructions live in the repository root `README.md`.
 
-Recommended on Windows: double-click `run_dashboard.cmd`, or run it from CMD:
+## Recommended launch
 
-```cmd
-run_dashboard.cmd
+From the repository root:
+
+```bash
+uv sync --all-groups --locked
+uv run --group dashboard streamlit run INSY684_Group-Extend/INSY684_Group-Extend/monitoring_dashboard/monitoring_dashboard.py
 ```
 
-This launcher always uses the compatible Anaconda environment and checks all dashboard
-dependencies before starting. To launch manually from this project directory:
+On Windows, double-click the root-level `run_dashboard.cmd`. The compatibility
+launcher in this directory delegates to that portable launcher and does not
+assume a user-specific Python installation.
 
-```powershell
-& "C:\Users\ayuan\anaconda3\python.exe" -m streamlit run monitoring_dashboard/monitoring_dashboard.py
+## What the Run button does
+
+`Run via FastAPI` validates the threshold and cost inputs with Pydantic, calls
+the in-process FastAPI policy endpoint, recalculates validation decisions and
+costs from saved model scores, and records the scenario in MLflow. It is a
+post-training policy simulation; it does not retrain LightGBM.
+
+## Optional offline report
+
+```bash
+uv run --group dashboard python INSY684_Group-Extend/INSY684_Group-Extend/monitoring_dashboard/generate_monitoring_html_offline.py
 ```
 
-The dashboard resolves `artifacts/` relative to the project, so the command also works
-when launched from another directory. You may select a different artifact folder in the
-sidebar.
+The report is written to `artifacts/monitoring_dashboard.html` inside this
+directory.
 
-To generate the self-contained offline HTML report:
+## Retraining
 
-```powershell
-& "C:\Users\ayuan\anaconda3\python.exe" monitoring_dashboard/generate_monitoring_html_offline.py
+Retraining requires the raw Home Credit CSV files described in the root
+`README.md`. Use the canonical root training command so feature engineering,
+validation, MLflow and governance artifacts stay synchronized:
+
+```bash
+uv run train-homecredit --data-dir homecreditdefaultriskdata --artifact-dir artifacts --sample-size 50000
 ```
-
-The generated report is written to `artifacts/monitoring_dashboard.html`.
-
-## Train the model
-
-run the model file:example
-uv run python -m homecredit_service.model_with_clusting `
-  --data-dir "C:\Users\Hank\Desktop\study\INSY684\Assignment\data" `
-  --artifact-dir "artifacts/model_with_clusting" `
-  --sample-size 50000 `
-  --valid-size 0.2 `
-  --test-size 0.1 `
-  --max-estimators 3000 `
-  --kmeans-clusters 2 `
-  --gmm-components 5 `
-  --hdbscan-min-cluster-size 50

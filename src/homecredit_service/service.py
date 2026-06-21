@@ -17,9 +17,15 @@ class PredictionService:
     def metadata(self) -> dict[str, Any]:
         metrics = self.bundle.get("metrics", {})
         raw_test_auc = metrics.get("test_auc")
+        raw_validation_auc = metrics.get("validation_auc")
+        raw_test_pr_auc = metrics.get("test_pr_auc")
         return {
             "trained_at_utc": self.bundle.get("trained_at_utc", ""),
+            "validation_auc": (
+                float(raw_validation_auc) if raw_validation_auc is not None else None
+            ),
             "test_auc": float(raw_test_auc) if raw_test_auc is not None else None,
+            "test_pr_auc": float(raw_test_pr_auc) if raw_test_pr_auc is not None else None,
             "test_evaluated": bool(self.bundle.get("test_evaluated", False)),
             "scale_pos_weight": float(self.bundle.get("scale_pos_weight", 1.0)),
             "train_rows": int(self.bundle.get("train_rows", 0)),

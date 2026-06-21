@@ -25,3 +25,5 @@ home-credit-default-risk.zip
 
 # Large trained artifacts (keep reports, skip model binaries)
 artifacts/*.joblib
+# The approved 1.3 MB release bundle is intentionally versioned so the API is ready after clone.
+!artifacts/model_bundle.joblib
