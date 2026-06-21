@@ -1,0 +1,3 @@
+I mainly worked on the Monitoring Dashboard and clustering analysis. These tasks were completed early in the project, and the outputs were then used by other teammates for further research and model development. Because much of my work involved analysis, dashboard design, and generating results that were later integrated by others, my GitHub commit count is relatively low. However, the dashboard and clustering outputs formed an important foundation for the team's subsequent work.
+
+Hank Shao
